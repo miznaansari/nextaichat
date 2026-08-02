@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nextaichat.com";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nextaichat.online";
 
 export const metadata = {
   metadataBase: new URL(baseUrl),

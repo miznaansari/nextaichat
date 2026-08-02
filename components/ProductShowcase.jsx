@@ -199,11 +199,10 @@ export default function ProductShowcase() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center gap-2.5 cursor-pointer ${
-                isActive
+              className={`px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center gap-2.5 cursor-pointer ${isActive
                   ? `bg-gradient-to-r ${tab.color} text-white shadow-[0_0_30px_rgba(147,51,234,0.5)] scale-105 border border-white/20`
                   : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-800"
-              }`}
+                }`}
             >
               <Icon className={`w-4 h-4 ${isActive ? "text-white animate-pulse" : "text-neutral-400"}`} />
               <span>{tab.label}</span>
@@ -219,7 +218,7 @@ export default function ProductShowcase() {
 
       {/* Mac-Style Cyber Product Window Container */}
       <div className="relative z-10 rounded-3xl bg-neutral-950/90 border border-purple-500/30 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,0.95)] overflow-hidden">
-        
+
         {/* Top Window Chrome Bar */}
         <div className="h-12 px-4 sm:px-6 bg-neutral-900/90 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -231,7 +230,7 @@ export default function ProductShowcase() {
           {/* Fake Browser URL Bar */}
           <div className="hidden sm:flex items-center gap-2 px-4 py-1 rounded-xl bg-neutral-950/80 border border-white/10 text-xs text-neutral-400 font-mono w-96 justify-center">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="text-white">https://app.nextaichat.com/chat/live</span>
+            <span className="text-white">https://app.nextaichat.online/chat/live</span>
             <span className="text-purple-400 font-bold ml-auto">SSL 256-bit</span>
           </div>
 
@@ -243,7 +242,7 @@ export default function ProductShowcase() {
 
         {/* Product Inner Workspace Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 min-h-[480px]">
-          
+
           {/* Left Sidebar (Chats & Personas) */}
           <div className="md:col-span-4 lg:col-span-3 bg-neutral-900/40 border-r border-white/10 p-4 space-y-5 hidden md:block">
             {/* New Session Button */}
@@ -306,7 +305,7 @@ export default function ProductShowcase() {
 
           {/* Main Chat Workspace */}
           <div className="md:col-span-8 lg:col-span-9 p-4 sm:p-6 flex flex-col justify-between space-y-4">
-            
+
             {/* Chat Workspace Header */}
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="space-y-0.5">
@@ -322,7 +321,7 @@ export default function ProductShowcase() {
               </div>
 
               <a
-                href={process.env.NEXT_PUBLIC_APP_URL || "https://app.nextaichat.com"}
+                href={process.env.NEXT_PUBLIC_APP_URL || "https://app.nextaichat.online"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs shadow-md flex items-center gap-1.5 hover:scale-105 transition-all shrink-0"
@@ -337,9 +336,8 @@ export default function ProductShowcase() {
               {activeData.messages.map((msg, idx) => (
                 <div
                   key={idx}
-                  className={`flex items-start gap-3 ${
-                    msg.type === "user" ? "ml-4 sm:ml-12" : ""
-                  }`}
+                  className={`flex items-start gap-3 ${msg.type === "user" ? "ml-4 sm:ml-12" : ""
+                    }`}
                 >
                   <div className="w-8 h-8 rounded-full bg-neutral-900 border border-white/10 flex items-center justify-center text-white shrink-0 text-sm font-bold shadow-md">
                     {msg.avatar}
@@ -355,11 +353,10 @@ export default function ProductShowcase() {
                       <span className="text-[10px] text-neutral-500 font-mono">{msg.time}</span>
                     </div>
                     <div
-                      className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed border ${
-                        msg.type === "user"
+                      className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed border ${msg.type === "user"
                           ? "bg-purple-950/70 border-purple-500/40 text-purple-100"
                           : "bg-neutral-900/80 border-white/10 text-neutral-200"
-                      }`}
+                        }`}
                     >
                       {msg.text}
                     </div>

@@ -41,11 +41,10 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 ${
-                    isActive
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 ${isActive
                       ? "bg-gradient-to-r from-purple-600/90 to-indigo-600/90 text-white shadow-[0_0_20px_rgba(147,51,234,0.4)] border border-purple-400/30"
                       : "text-neutral-400 hover:text-white hover:bg-white/5"
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -71,7 +70,7 @@ export default function Navbar() {
           </Link>
 
           <a
-            href={process.env.NEXT_PUBLIC_APP_URL || "https://app.nextaichat.com"}
+            href={process.env.NEXT_PUBLIC_APP_URL || "https://app.nextaichat.online"}
             target="_blank"
             rel="noopener noreferrer"
             className="relative group px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 text-white font-bold text-xs shadow-[0_0_25px_rgba(147,51,234,0.4)] flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_35px_rgba(147,51,234,0.7)]"
