@@ -1,0 +1,123 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String           @id @default(cuid())
+  name              String           @unique
+  password          String
+  language          String           @default("en")
+  hasChosenLanguage Boolean          @default(false)
+  sessions          UserSession[]
+  characters        ChatCharacter[]
+  chats             ChatSession[]
+  snippets          ReusablePhrase[]
+  createdAt         DateTime         @default(now())
+}
+
+model UserSession {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @db.Text
+  isExpire  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, isExpire])
+}
+
+model ChatCharacter {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String   @db.Text
+  avatar      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ChatSession {
+  id                String             @id @default(cuid())
+  userId            String
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title             String
+  story             String             @default("Interactive Roleplay Scenario") @db.Text
+  selectedModel     String             @default("gemini-3.5-flash-lite")
+  sessionCharacters SessionCharacter[]
+  messages          ChatMessage[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@index([userId, updatedAt])
+}
+
+model SessionCharacter {
+  id            String      @id @default(cuid())
+  chatSessionId String
+  chatSession   ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+  name          String
+  persona       String      @db.Text
+  createdAt     DateTime    @default(now())
+
+  @@index([chatSessionId, createdAt])
+}
+
+model ChatMessage {
+  id               String      @id @default(cuid())
+  chatSessionId    String
+  chatSession      ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+  role             String      // "user" | "model"
+  content          String      @db.Text
+  includeInContext Boolean     @default(true)
+  tokenEstimate    Int         @default(0)
+  createdAt        DateTime    @default(now())
+
+  @@index([chatSessionId, includeInContext, createdAt])
+  @@index([chatSessionId, createdAt])
+}
+
+model ReusablePhrase {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text      String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  userId    String?
+  name      String
+  email     String
+  category  String   @default("General")
+  message   String   @db.Text
+  status    String   @default("sent")
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String   @db.Text
+  content     String   @db.Text
+  coverImage  String?  @db.Text
+  category    String   @default("General")
+  author      String   @default("NextAiChat Team")
+  views       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, createdAt])
+}
