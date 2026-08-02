@@ -3,32 +3,33 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Sparkles, Compass, BookOpen, Shield, LayoutDashboard, ArrowUpRight, Cpu } from "lucide-react";
+import { Sparkles, Compass, ArrowUpRight, ArrowRight, Languages } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { language, toggleLanguage, t } = useLanguage();
 
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Compare (vs Character.ai)", href: "/compare" },
     { name: "Blog", href: "/blog" },
-    { name: "Admin Dashboard", href: "/admin" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 h-20 border-b border-purple-500/20 px-4 sm:px-6 lg:px-10 bg-neutral-950/80 backdrop-blur-2xl shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+    <header className="sticky top-0 z-50 h-24 border-b border-purple-500/20 px-4 sm:px-6 lg:px-10 bg-neutral-950/80 backdrop-blur-2xl shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
       <div className="max-w-[1440px] mx-auto w-full h-full flex items-center justify-between">
         <div className="flex items-center gap-8">
-          {/* Brand Logo with logo-landspace.png */}
+          {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]">
             <div className="relative flex items-center">
               <Image
                 src="/logo-landspace.png"
                 alt="NextAiChat Brand Logo"
-                width={200}
-                height={50}
+                width={360}
+                height={100}
                 priority
-                className="h-10 sm:h-11 w-auto object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.35)]"
+                className="h-16 sm:h-20 md:h-20 w-auto object-contain drop-shadow-[0_0_25px_rgba(168,85,247,0.5)]"
               />
             </div>
           </Link>
@@ -41,25 +42,30 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 ${isActive
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 ${
+                    isActive
                       ? "bg-gradient-to-r from-purple-600/90 to-indigo-600/90 text-white shadow-[0_0_20px_rgba(147,51,234,0.4)] border border-purple-400/30"
                       : "text-neutral-400 hover:text-white hover:bg-white/5"
-                    }`}
+                  }`}
                 >
-                  {link.name}
+                  {t(link.name)}
                 </Link>
               );
             })}
           </nav>
         </div>
 
-        {/* Right CTA & System Status */}
-        <div className="flex items-center gap-3.5">
-          {/* Live Matrix Status Badge */}
-          <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-[11px] font-mono text-emerald-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
-            <span>MATRIX v4.0 ONLINE</span>
-          </div>
+        {/* Right CTA & Language Toggle */}
+        <div className="flex items-center gap-2.5">
+          {/* English / Hinglish Toggle Switcher */}
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold bg-neutral-900/90 hover:bg-neutral-800 text-purple-300 hover:text-white border border-purple-500/30 hover:border-purple-400/60 transition-all cursor-pointer shadow-sm active:scale-95"
+            title="Switch Language (English / Hinglish)"
+          >
+            <Languages className="w-3.5 h-3.5 text-purple-400" />
+            <span>{language === "en" ? "EN | Hinglish" : "Hinglish | EN"}</span>
+          </button>
 
           <Link
             href="/compare"
@@ -76,12 +82,12 @@ export default function Navbar() {
             className="relative group px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 text-white font-bold text-xs shadow-[0_0_25px_rgba(147,51,234,0.4)] flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_35px_rgba(147,51,234,0.7)]"
           >
             <Sparkles className="w-3.5 h-3.5 text-purple-200 animate-pulse" />
-            <span>Launch App</span>
-            <ArrowUpRight className="w-4 h-4 text-cyan-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span className="sm:hidden">Launch</span>
+            <span className="hidden sm:inline">{t("Launch App")}</span>
+            <ArrowRight className="w-4 h-4 text-cyan-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
       </div>
     </header>
   );
 }
-
