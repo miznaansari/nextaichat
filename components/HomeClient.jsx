@@ -23,7 +23,7 @@ export default function HomeClient({ blogs, samplePersonas, appUrl }) {
   const { t } = useLanguage();
 
   return (
-    <div className="flex-1 flex flex-col relative selection:bg-purple-500 selection:text-white">
+    <div className="flex-1 flex flex-col relative selection:bg-purple-500 selection:text-white w-full max-w-full overflow-x-clip">
       {/* HERO SECTION (FULL WIDE CONTAINER) */}
       <section className="relative z-10 min-h-[calc(100vh-6rem)] flex flex-col justify-center items-center py-6 lg:py-10 px-4 sm:px-6 md:px-8 max-w-[1440px] w-full mx-auto text-center space-y-6">
         

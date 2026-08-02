@@ -113,7 +113,7 @@ export default function RootLayout({ children }) {
         <meta name="chatgpt-plugin" content="enabled" />
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context Summary" />
       </head>
-      <body className="min-h-full flex flex-col bg-[#030712] text-neutral-100 selection:bg-purple-500 selection:text-white relative overflow-x-hidden font-sans">
+      <body className="min-h-full flex flex-col bg-[#030712] text-neutral-100 selection:bg-purple-500 selection:text-white relative overflow-x-clip w-full max-w-full font-sans">
         <LanguageProvider>
           {/* ANTIGRAVITY ALWAYS-ON BACKGROUND MOTION (ORBS, ORBITS, PARTICLES & GRID) */}
           <div className="fixed top-[-10%] left-[-5%] w-[600px] h-[600px] bg-gradient-to-tr from-purple-900/30 via-indigo-900/20 to-transparent rounded-full animate-pulse-glow pointer-events-none z-0" />
@@ -134,7 +134,7 @@ export default function RootLayout({ children }) {
 
           {/* Navbar Header (Admin Dashboard link commented out) */}
           <Navbar />
-          <main className="flex-1 flex flex-col relative z-10">{children}</main>
+          <main className="flex-1 flex flex-col relative z-10 w-full max-w-full overflow-x-clip">{children}</main>
           <Footer />
         </LanguageProvider>
       </body>
