@@ -7,8 +7,8 @@ import { ShieldCheck, Lock, Mail, ArrowRight, Loader2, KeyRound, Eye, EyeOff, Sp
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("nextaichatv1@gmail.com");
-  const [password, setPassword] = useState("123123123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
 
       {/* Main Glass Card */}
       <div className="w-full max-w-md bg-neutral-900/70 backdrop-blur-2xl border border-purple-500/30 p-7 sm:p-9 rounded-3xl shadow-[0_0_80px_rgba(147,51,234,0.25)] space-y-6 relative z-10">
-        
+
         {/* Portal Header */}
         <div className="text-center space-y-3 flex flex-col items-center">
           <Image
