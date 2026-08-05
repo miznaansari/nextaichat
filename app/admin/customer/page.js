@@ -222,7 +222,7 @@ export default function AdminCustomerPage() {
                   <th className="py-3.5 px-4">Auth Provider</th>
                   <th className="py-3.5 px-4">Daily Credit Usage</th>
                   <th className="py-3.5 px-4">All-Time Usage</th>
-                  <th className="py-3.5 px-4">Joined Date</th>
+                  <th className="py-3.5 px-4">Joined Date & Time</th>
                   <th className="py-3.5 px-4 text-right">Actions</th>
                 </tr>
               </thead>
@@ -232,10 +232,14 @@ export default function AdminCustomerPage() {
                   const dailyLimit = u.dailyLimit || 100;
                   const isLimitReached = todayCount >= dailyLimit;
                   const formattedDate = u.createdAt
-                    ? new Date(u.createdAt).toLocaleDateString("en-US", {
+                    ? new Date(u.createdAt).toLocaleString(undefined, {
                         month: "short",
                         day: "numeric",
                         year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hour12: true,
                       })
                     : "N/A";
 
@@ -444,6 +448,20 @@ export default function AdminCustomerPage() {
                   <p><strong className="text-white">Email:</strong> {editingUser.email || "N/A"}</p>
                   <p><strong className="text-white">Auth Provider:</strong> {editingUser.authProvider}</p>
                   <p><strong className="text-white">Today Credits Used:</strong> {editingUser.todayCount || 0}</p>
+                  <p>
+                    <strong className="text-white">Joined Date & Time:</strong>{" "}
+                    {editingUser.createdAt
+                      ? new Date(editingUser.createdAt).toLocaleString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                          hour12: true,
+                        })
+                      : "N/A"}
+                  </p>
                 </div>
               </div>
 
