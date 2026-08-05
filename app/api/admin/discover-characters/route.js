@@ -11,6 +11,11 @@ export async function GET(req) {
     }
 
     const characters = await prisma.discoverCharacter.findMany({
+      include: {
+        _count: {
+          select: { chatSessions: true },
+        },
+      },
       orderBy: { createdAt: "desc" },
     });
 
