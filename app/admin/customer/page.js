@@ -6,6 +6,7 @@ import {
   Search,
   Zap,
   Edit,
+  Trash2,
   Loader2,
   X,
   Check,
@@ -29,6 +30,7 @@ export default function AdminCustomerPage() {
   const [editingUser, setEditingUser] = useState(null);
   const [newLimitInput, setNewLimitInput] = useState("100");
   const [submittingUserLimit, setSubmittingUserLimit] = useState(false);
+  const [deletingUserId, setDeletingUserId] = useState(null);
 
   // Pagination States
   const [currentPage, setCurrentPage] = useState(1);
@@ -95,6 +97,39 @@ export default function AdminCustomerPage() {
       alert("Error updating user daily limit");
     } finally {
       setSubmittingUserLimit(false);
+    }
+  };
+
+  const handleDeleteUser = async (u) => {
+    if (!u) return;
+    if (
+      !confirm(
+        `Are you sure you want to PERMANENTLY delete customer "${u.name}" (${u.email || "N/A"})?\n\nThis action will permanently delete:\n• User account\n• ALL chat sessions\n• ALL messages & chat history\n• ALL personas & credit usage logs`
+      )
+    ) {
+      return;
+    }
+
+    setDeletingUserId(u.id);
+    try {
+      const res = await fetch(`/api/admin/users/${u.id}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        setUsers((prev) => prev.filter((user) => user.id !== u.id));
+        if (editingUser?.id === u.id) {
+          setIsUserModalOpen(false);
+          setEditingUser(null);
+        }
+      } else {
+        const err = await res.json();
+        alert(err.error || "Failed to delete user");
+      }
+    } catch (err) {
+      alert("Error deleting user");
+    } finally {
+      setDeletingUserId(null);
     }
   };
 
@@ -292,13 +327,27 @@ export default function AdminCustomerPage() {
                       </td>
 
                       <td className="py-3.5 px-4 text-right">
-                        <button
-                          onClick={() => handleOpenEditUserModal(u)}
-                          className="px-3 py-1.5 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 text-purple-200 text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer"
-                        >
-                          <Edit className="w-3.5 h-3.5" />
-                          <span>Edit Credit Limit</span>
-                        </button>
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => handleOpenEditUserModal(u)}
+                            className="px-3 py-1.5 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 text-purple-200 text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                            <span>Edit Limit</span>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteUser(u)}
+                            disabled={deletingUserId === u.id}
+                            className="p-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-300 hover:text-rose-100 transition-all cursor-pointer disabled:opacity-50"
+                            title="Permanently Delete Customer & All Chat Sessions"
+                          >
+                            {deletingUserId === u.id ? (
+                              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            ) : (
+                              <Trash2 className="w-3.5 h-3.5" />
+                            )}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -481,26 +530,42 @@ export default function AdminCustomerPage() {
                 </span>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+              <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-800">
                 <button
                   type="button"
-                  onClick={() => setIsUserModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white text-xs font-semibold"
+                  onClick={() => handleDeleteUser(editingUser)}
+                  disabled={deletingUserId === editingUser.id}
+                  className="px-3 py-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-300 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={submittingUserLimit}
-                  className="px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-2 disabled:opacity-50 transition-all cursor-pointer shadow-lg shadow-cyan-500/20"
-                >
-                  {submittingUserLimit ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                  {deletingUserId === editingUser.id ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   ) : (
-                    <Check className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   )}
-                  <span>Save User Limit</span>
+                  <span>Delete Customer & Chats</span>
                 </button>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsUserModalOpen(false)}
+                    className="px-4 py-2 rounded-xl bg-slate-900 text-slate-400 hover:text-white text-xs font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={submittingUserLimit}
+                    className="px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-2 disabled:opacity-50 transition-all cursor-pointer shadow-lg shadow-cyan-500/20"
+                  >
+                    {submittingUserLimit ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Check className="w-4 h-4" />
+                    )}
+                    <span>Save User Limit</span>
+                  </button>
+                </div>
               </div>
             </form>
           </div>

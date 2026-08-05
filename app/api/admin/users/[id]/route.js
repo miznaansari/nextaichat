@@ -58,3 +58,43 @@ export async function PATCH(req, { params }) {
     );
   }
 }
+
+// DELETE customer user, along with cascading deletion of all chat sessions, messages, personas & usage
+export async function DELETE(req, { params }) {
+  try {
+    const admin = await RequireAdmin(req);
+    if (!admin) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json({ error: "User ID is required" }, { status: 400 });
+    }
+
+    // Verify user exists
+    const targetUser = await prisma.user.findUnique({
+      where: { id },
+      select: { id: true, name: true, email: true },
+    });
+
+    if (!targetUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Delete User - Cascades down to UserSession, ChatCharacter, ChatSession -> ChatMessage & SessionCharacter, ReusablePhrase, AiUsage, UserPersona
+    await prisma.user.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({
+      message: `User ${targetUser.name} and all associated chat sessions, messages, personas, and usage logs have been permanently deleted.`,
+    });
+  } catch (error) {
+    console.error("Admin Delete User Error:", error);
+    return NextResponse.json(
+      { error: error.message || "Failed to delete user and chat data" },
+      { status: 500 }
+    );
+  }
+}
