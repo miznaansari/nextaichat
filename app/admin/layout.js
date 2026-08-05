@@ -13,6 +13,7 @@ import {
   Menu,
   X,
   Loader2,
+  Activity,
   ChevronRight,
   ExternalLink,
 } from "lucide-react";
@@ -79,6 +80,12 @@ export default function AdminLayoutShell({ children }) {
       href: "/admin",
       icon: LayoutDashboard,
       active: pathname === "/admin",
+    },
+    {
+      name: "System Health",
+      href: "/admin/health",
+      icon: Activity,
+      active: pathname?.startsWith("/admin/health"),
     },
     {
       name: "Customers",
