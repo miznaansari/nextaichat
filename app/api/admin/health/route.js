@@ -24,7 +24,7 @@ export async function GET(req) {
     }
 
     // Try proxying live health metrics directly from primary AI app (port 3000 / NEXT_PUBLIC_APP_URL)
-    const primaryAppUrl = process.env.PRIMARY_APP_URL || "http://app.nextaichat.online";
+    const primaryAppUrl = process.env.PRIMARY_APP_URL || "https://app.nextaichat.online";
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 1500);
@@ -37,7 +37,7 @@ export async function GET(req) {
       });
       clearTimeout(timeoutId);
 
-      if (appRes.ok) {  
+      if (appRes.ok) {
         const appHealthData = await appRes.json();
         return NextResponse.json(appHealthData);
       }

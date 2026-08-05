@@ -42,8 +42,8 @@ export default function AdminLoginPage() {
   };
 
   const handleAutoFill = () => {
-    setEmail("nextaichatv1@gmail.com");
-    setPassword("123123123");
+    setEmail("");
+    setPassword("");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -144,25 +144,7 @@ export default function AdminLoginPage() {
         </form>
 
         {/* Quick Seed Credentials Card */}
-        <div className="p-3.5 rounded-2xl bg-neutral-950/80 border border-neutral-800 text-[11px] text-neutral-400 space-y-2 font-mono flex items-center justify-between">
-          <div className="space-y-0.5">
-            <p className="text-purple-300 font-bold flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-purple-400" />
-              Default Admin Seed:
-            </p>
-            <p>Email: <span className="text-white font-bold">nextaichatv1@gmail.com</span></p>
-            <p>Pass: <span className="text-white font-bold">123123123</span></p>
-          </div>
 
-          <button
-            type="button"
-            onClick={handleAutoFill}
-            className="px-3 py-1.5 rounded-xl bg-purple-950 border border-purple-700 text-purple-300 hover:bg-purple-900 text-[10px] font-bold transition-all cursor-pointer shrink-0 flex items-center gap-1"
-          >
-            {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <KeyRound className="w-3 h-3" />}
-            <span>{copied ? "Filled!" : "Auto-Fill"}</span>
-          </button>
-        </div>
       </div>
     </div>
   );
