@@ -21,12 +21,13 @@ export default function OptimizedAvatar({
   const containerRef = useRef(null);
   const highResRef = useRef(null);
 
-  // Compute high-res WebP, low-res 180p preview & original fallback
-  const { highWebpSrc, lowWebpSrc, blurDataUrl, originalSrc } = useMemo(() => {
+  // Compute multi-res high WebP (350w), small WebP (150w), low 180p preview & original fallback
+  const { highWebpSrc, smWebpSrc, lowWebpSrc, blurDataUrl, originalSrc } = useMemo(() => {
     if (!src || typeof src !== "string" || src.includes("unsplash.com")) {
       const fallbackEntry = manifest["tutor_ananya"] || manifest["kota_verma_teacher"] || {};
       return {
         highWebpSrc: fallbackEntry.webp || "/avatars/compressed/tutor_ananya.webp",
+        smWebpSrc: fallbackEntry.sm || "/avatars/compressed/tutor_ananya-sm.webp",
         lowWebpSrc: fallbackEntry.low || "/avatars/compressed/tutor_ananya-low.webp",
         blurDataUrl: fallbackEntry.blur || null,
         originalSrc: fallbackEntry.original || "/avatars/tutor_ananya.png",
@@ -40,6 +41,7 @@ export default function OptimizedAvatar({
       if (entry) {
         return {
           highWebpSrc: entry.webp,
+          smWebpSrc: entry.sm || entry.webp,
           lowWebpSrc: entry.low || entry.webp,
           blurDataUrl: entry.blur || null,
           originalSrc: entry.original || src,
@@ -47,6 +49,7 @@ export default function OptimizedAvatar({
       }
       return {
         highWebpSrc: `/avatars/compressed/${baseName}.webp`,
+        smWebpSrc: `/avatars/compressed/${baseName}-sm.webp`,
         lowWebpSrc: `/avatars/compressed/${baseName}-low.webp`,
         blurDataUrl: null,
         originalSrc: src,
@@ -55,6 +58,7 @@ export default function OptimizedAvatar({
 
     return {
       highWebpSrc: src,
+      smWebpSrc: src,
       lowWebpSrc: src,
       blurDataUrl: null,
       originalSrc: src,
@@ -62,8 +66,9 @@ export default function OptimizedAvatar({
   }, [src]);
 
   const activeHighSrc = hasError ? originalSrc : highWebpSrc;
+  const activeSmSrc = hasError ? originalSrc : smWebpSrc;
 
-  // IntersectionObserver: Trigger HQ image download only when scrolled into view (with 200px prefetch margin)
+  // IntersectionObserver: Trigger HQ image download only when scrolled near element
   useEffect(() => {
     if (priority || isInView) return;
 
@@ -81,7 +86,7 @@ export default function OptimizedAvatar({
           }
         });
       },
-      { rootMargin: "200px 0px" } // Starts loading HQ 200px before scrolling into view for a seamless experience
+      { rootMargin: "200px 0px" }
     );
 
     if (containerRef.current) {
@@ -107,13 +112,19 @@ export default function OptimizedAvatar({
     }
   };
 
+  const responsiveSrcSet = hasError
+    ? undefined
+    : `${activeSmSrc} 150w, ${activeHighSrc} 350w`;
+
+  const responsiveSizes = sizes || "(max-width: 640px) 150px, (max-width: 1024px) 280px, 350px";
+
   return (
     <div
       ref={containerRef}
       className={`relative overflow-hidden bg-neutral-900/60 ${className}`}
       style={style}
     >
-      {/* 1. Low-Res 180p Blurred Preview (Loads immediately ~1 KiB) */}
+      {/* 1. Low-Res 180p Blurred Preview (Instant rendering ~0.8 KiB) */}
       <img
         src={lowWebpSrc}
         alt=""
@@ -124,7 +135,7 @@ export default function OptimizedAvatar({
         style={blurDataUrl ? { backgroundImage: `url("${blurDataUrl}")`, backgroundSize: "cover" } : {}}
       />
 
-      {/* 2. High-Res Compressed WebP Image (ONLY starts downloading when user SCROLLS near element) */}
+      {/* 2. Responsive WebP Image (Automatically serves 150px ~5KiB image for small dimensions) */}
       {isInView && (
         <img
           ref={(node) => {
@@ -134,6 +145,8 @@ export default function OptimizedAvatar({
             }
           }}
           src={activeHighSrc}
+          srcSet={responsiveSrcSet}
+          sizes={responsiveSizes}
           alt={alt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"

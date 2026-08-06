@@ -230,7 +230,7 @@ export default function HeroSection({
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border-2 border-purple-400/40 shadow-md">
-                      <OptimizedAvatar src={persona.img} alt={persona.name} priority={true} className="w-full h-full object-cover object-top filter contrast-105" />
+                      <OptimizedAvatar src={persona.img} alt={persona.name} className="w-full h-full object-cover object-top filter contrast-105" />
                       <span className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-neutral-950 shadow-sm z-10" />
                     </div>
                     <div>

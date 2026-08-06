@@ -150,7 +150,6 @@ export default function WhatWeOfferSection({ characters = [], stats = { totalCha
               <OptimizedAvatar
                 src={mod.avatar}
                 alt={mod.featuredName}
-                priority={idx < 2}
                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 select-none filter contrast-105"
               />
 

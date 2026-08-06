@@ -11,7 +11,7 @@ const avatarsDir = path.join(publicDir, "avatars");
 const compressedDir = path.join(avatarsDir, "compressed");
 
 async function compressAll() {
-  console.log("Starting Sharp image compression with Progressive Low-to-High preview generation...");
+  console.log("Starting Sharp responsive multi-size image compression...");
 
   if (!fs.existsSync(compressedDir)) {
     fs.mkdirSync(compressedDir, { recursive: true });
@@ -32,27 +32,38 @@ async function compressAll() {
 
     const ext = path.extname(file);
     const baseName = path.basename(file, ext);
+
     const webpFileName = `${baseName}.webp`;
+    const smFileName = `${baseName}-sm.webp`;
     const lowFileName = `${baseName}-low.webp`;
+
     const webpPath = path.join(compressedDir, webpFileName);
+    const smPath = path.join(compressedDir, smFileName);
     const lowPath = path.join(compressedDir, lowFileName);
 
-    // 1. High Quality WebP (400px width for sharp avatar display)
+    // 1. Full High-Res WebP (350px width, quality 75, ~14 KiB)
     await sharp(filePath)
-      .resize({ width: 400, fit: "cover", withoutEnlargement: true })
-      .webp({ quality: 80, effort: 6 })
+      .resize({ width: 350, fit: "cover", withoutEnlargement: true })
+      .webp({ quality: 75, effort: 6 })
       .toFile(webpPath);
 
-    // 2. Low Quality 180p WebP preview (80px width, low quality, lightweight ~1.5 KiB)
+    // 2. Small Responsive Thumbnail WebP (150px width, quality 75, ~5 KiB)
     await sharp(filePath)
-      .resize({ width: 80, fit: "cover", withoutEnlargement: true })
-      .webp({ quality: 30, effort: 4 })
+      .resize({ width: 150, fit: "cover", withoutEnlargement: true })
+      .webp({ quality: 75, effort: 6 })
+      .toFile(smPath);
+
+    // 3. Ultra Low-Res 180p Preview WebP (60px width, quality 25, ~0.8 KiB)
+    await sharp(filePath)
+      .resize({ width: 60, fit: "cover", withoutEnlargement: true })
+      .webp({ quality: 25, effort: 4 })
       .toFile(lowPath);
 
     const compressedStat = fs.statSync(webpPath);
+    const smStat = fs.statSync(smPath);
     totalCompressedSize += compressedStat.size;
 
-    // 3. Ultra-tiny base64 blur data URL (~200 bytes) for instant render
+    // 4. Base64 micro blur data URL (~200 bytes)
     const blurBuffer = await sharp(filePath)
       .resize({ width: 16, fit: "cover" })
       .blur(2)
@@ -62,13 +73,14 @@ async function compressAll() {
     const base64Blur = `data:image/webp;base64,${blurBuffer.toString("base64")}`;
     manifest[baseName] = {
       webp: `/avatars/compressed/${webpFileName}`,
+      sm: `/avatars/compressed/${smFileName}`,
       low: `/avatars/compressed/${lowFileName}`,
       blur: base64Blur,
       original: `/avatars/${file}`
     };
 
     console.log(
-      `Compressed ${file}: ${(stat.size / 1024).toFixed(1)} KiB -> High: ${(compressedStat.size / 1024).toFixed(1)} KiB | Low: ${(fs.statSync(lowPath).size / 1024).toFixed(1)} KiB`
+      `Compressed ${file}: ${(stat.size / 1024).toFixed(1)} KiB -> High: ${(compressedStat.size / 1024).toFixed(1)} KiB | Sm: ${(smStat.size / 1024).toFixed(1)} KiB`
     );
   }
 
@@ -78,7 +90,7 @@ async function compressAll() {
     JSON.stringify(manifest, null, 2)
   );
 
-  // 4. Compress Root Heavy PNGs
+  // 5. Compress Root Heavy PNGs
   const rootImagesToCompress = ["nextaichat.png", "logo.png", "logo-landspaceq.png"];
   for (const rootImg of rootImagesToCompress) {
     const rootPath = path.join(publicDir, rootImg);
@@ -90,7 +102,7 @@ async function compressAll() {
       const rootWebpPath = path.join(publicDir, `${baseName}.webp`);
 
       await sharp(rootPath)
-        .webp({ quality: 82, effort: 6 })
+        .webp({ quality: 75, effort: 6 })
         .toFile(rootWebpPath);
 
       const newSize = fs.statSync(rootWebpPath).size;
