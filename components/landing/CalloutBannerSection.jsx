@@ -1,15 +1,25 @@
 "use client";
 
 import { ArrowRight, ShieldCheck } from "lucide-react";
+import { formatNumber } from "@/lib/utils";
 
-export default function CalloutBannerSection({ appUrl = "https://app.nextaichat.online" }) {
-  const avatarStack = [
-    "/avatars/aarav_smart_bestie.png",
-    "/avatars/shanaya_delhi.png",
-    "/avatars/kabir_rich_bestie.png",
-    "/avatars/coach_priya.png",
-    "/avatars/kota_verma_teacher.png"
-  ];
+export default function CalloutBannerSection({
+  appUrl = "https://app.nextaichat.online",
+  stats = { totalChats: 0, totalCharacters: 0, totalUsers: 0 },
+  characters = []
+}) {
+  const avatarStack = characters.length >= 5
+    ? characters.slice(0, 5).map((c) => c.avatar).filter(Boolean)
+    : [
+        "/avatars/aarav_smart_bestie.png",
+        "/avatars/shanaya_delhi.png",
+        "/avatars/kabir_rich_bestie.png",
+        "/avatars/coach_priya.png",
+        "/avatars/kota_verma_teacher.png"
+      ];
+
+  const charCount = stats.totalCharacters || characters.length || 34;
+  const userDisplay = stats.totalUsers ? formatNumber(stats.totalUsers) : (stats.totalChats ? formatNumber(stats.totalChats) : "100K");
 
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto">
@@ -29,7 +39,7 @@ export default function CalloutBannerSection({ appUrl = "https://app.nextaichat.
               </div>
               <span className="text-xs text-purple-300 font-bold tracking-wide flex items-center gap-1">
                 <ShieldCheck className="w-4 h-4 text-purple-400" />
-                Trusted by 100K+ Roleplayers
+                Trusted by {userDisplay}+ Roleplayers
               </span>
             </div>
 
@@ -37,7 +47,7 @@ export default function CalloutBannerSection({ appUrl = "https://app.nextaichat.
               Together, let's explore unlimited AI personas & stories.
             </h2>
             <p className="text-xs sm:text-sm text-neutral-300">
-              Join NextAiChat today and get instant access to 33+ pre-configured AI tutors, besties, squads, and interactive games.
+              Join NextAiChat today and get instant access to {charCount}+ pre-configured AI tutors, besties, squads, and interactive games.
             </p>
           </div>
 

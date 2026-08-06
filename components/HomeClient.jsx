@@ -24,19 +24,19 @@ export default function HomeClient({ blogs = [], characters = [], stats = { tota
     <div className="min-h-screen text-neutral-100 font-sans selection:bg-purple-500 selection:text-white relative overflow-x-hidden">
 
       {/* 1. Creative Dark Purple Hero Section (Replicating Image Header, Title, Splatter Glow & 4 Metrics) */}
-      <HeroSection onExploreClick={scrollToCharacters} appUrl={appUrl} />
+      <HeroSection onExploreClick={scrollToCharacters} appUrl={appUrl} characters={characters} stats={stats} />
 
       {/* 2. "WHAT WE DO" 4-Card Section (Replicating Image "WHAT I DO" 01, 02, 03, 04) */}
       <WhatWeOfferSection />
 
       {/* 3. "FEATURED CHARACTERS" 3-Card Grid (Commented out per request) */}
-      {/* <FeaturedCharactersSection id="featured" appUrl={appUrl} onExploreClick={scrollToCharacters} /> */}
+      {/* <FeaturedCharactersSection id="featured" appUrl={appUrl} onExploreClick={scrollToCharacters} characters={characters} stats={stats} /> */}
 
       {/* 4. Complete 33 Avatar Character Discovery Grid across 4 categories */}
-      <CharacterGridSection id="characters" appUrl={appUrl} />
+      <CharacterGridSection id="characters" appUrl={appUrl} characters={characters} stats={stats} />
 
       {/* 5. 3-Column Section: AI Engine Capabilities, How It Works (01-04), & Solid Purple CTA Block */}
-      <ToolkitProcessCtaSection appUrl={appUrl} />
+      <ToolkitProcessCtaSection appUrl={appUrl} stats={stats} />
 
       {/* 6. Interactive Sandbox Demo Preview */}
       <InteractiveDemoSection id="demo" appUrl={appUrl} />
@@ -45,7 +45,7 @@ export default function HomeClient({ blogs = [], characters = [], stats = { tota
       {/* <ProductShowcase appUrl={appUrl} /> */}
 
       {/* 8. Cinematic Quote & Platform Metrics */}
-      <QuoteStatsSection />
+      <QuoteStatsSection stats={stats} />
 
       {/* 9. Recent Blog & Knowledge Base Articles */}
       {blogs && blogs.length > 0 && (
@@ -99,7 +99,7 @@ export default function HomeClient({ blogs = [], characters = [], stats = { tota
       )}
 
       {/* 10. Bottom Callout Banner with Avatar Stack */}
-      <CalloutBannerSection appUrl={appUrl} />
+      <CalloutBannerSection appUrl={appUrl} stats={stats} characters={characters} />
 
     </div>
   );

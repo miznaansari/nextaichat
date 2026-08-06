@@ -1,8 +1,13 @@
 "use client";
 
 import { Quote, Sparkles } from "lucide-react";
+import { formatNumber } from "@/lib/utils";
 
-export default function QuoteStatsSection() {
+export default function QuoteStatsSection({ stats = { totalChats: 0, totalCharacters: 0, totalMessages: 0 } }) {
+  const charCount = stats.totalCharacters || 34;
+  const messageDisplay = formatNumber(stats.totalMessages || 2500000);
+  const chatDisplay = formatNumber(stats.totalChats || 850000);
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-purple-600/10 blur-[140px] pointer-events-none -z-10" />
@@ -22,18 +27,18 @@ export default function QuoteStatsSection() {
 
           <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-neutral-800 pt-6 lg:pt-0 lg:pl-8 space-y-6">
             <div>
-              <p className="text-3xl sm:text-4xl font-black text-white">33+</p>
+              <p className="text-3xl sm:text-4xl font-black text-white">{charCount}+</p>
               <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">Unique AI Avatars & Games</p>
             </div>
 
             <div>
-              <p className="text-3xl sm:text-4xl font-black text-purple-400">2.5M+</p>
+              <p className="text-3xl sm:text-4xl font-black text-purple-400">{messageDisplay}+</p>
               <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">Roleplay Messages Generated</p>
             </div>
 
             <div>
-              <p className="text-3xl sm:text-4xl font-black text-indigo-400">24 / 7</p>
-              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">Always Available & Zero Queue</p>
+              <p className="text-3xl sm:text-4xl font-black text-indigo-400">{chatDisplay}+</p>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">Total Roleplays Started</p>
             </div>
           </div>
         </div>

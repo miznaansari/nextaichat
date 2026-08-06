@@ -34,8 +34,7 @@ export default async function HomePage() {
   try {
     const rawChars = await prisma.discoverCharacter.findMany({
       where: { isPublic: true },
-      take: 9,
-      orderBy: { createdAt: "desc" },
+      orderBy: { chatsCount: "desc" },
     });
     
     // Serialize Prisma objects safely for Client Component
@@ -50,6 +49,8 @@ export default async function HomePage() {
 
   try {
     const sessionCount = await prisma.chatSession.count();
+    const messageCount = await prisma.chatMessage.count();
+    const userCount = await prisma.user.count();
     const charCount = await prisma.discoverCharacter.count({ where: { isPublic: true } });
     
     const charChatsSum = await prisma.discoverCharacter.aggregate({
@@ -58,11 +59,16 @@ export default async function HomePage() {
       },
     });
 
-    const calculatedTotalChats = (charChatsSum._sum.chatsCount || 0) + sessionCount;
+    const baseChatsSum = charChatsSum._sum.chatsCount || 0;
+    const calculatedTotalChats = baseChatsSum + sessionCount;
+    // Real messages count + proportional base messages estimate for public showcase characters
+    const calculatedTotalMessages = messageCount + (baseChatsSum * 15);
 
     stats = {
       totalChats: calculatedTotalChats,
       totalCharacters: charCount,
+      totalMessages: calculatedTotalMessages,
+      totalUsers: userCount,
     };
   } catch (e) {
     console.error("Home page stats fetch error:", e);

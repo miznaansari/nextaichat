@@ -2,54 +2,78 @@
 
 import { useState } from "react";
 import { Sparkles, ArrowUpRight, Star, MessageSquare, Flame } from "lucide-react";
+import { formatNumber } from "@/lib/utils";
 
-export default function HeroSection({ appUrl = "https://app.nextaichat.online", onExploreClick }) {
-  const [selectedAvatar, setSelectedAvatar] = useState("/avatars/escape_room_game.png");
+export default function HeroSection({
+  appUrl = "https://app.nextaichat.online",
+  onExploreClick,
+  characters = [],
+  stats = { totalChats: 0, totalCharacters: 0 }
+}) {
+  // Map real characters from DB into personas reel format
+  const personasList = characters.length > 0
+    ? characters.slice(0, 4).map((c) => ({
+        id: c.id,
+        name: c.name,
+        role: c.tagline || c.category || "AI Persona",
+        category: c.category || "Roleplay",
+        img: c.avatar || "/avatars/escape_room_game.png",
+        rating: c.rating || "5.0",
+        chats: formatNumber(c.chatsCount),
+        quote: c.story ? c.story.substring(0, 90) + "..." : c.tagline
+      }))
+    : [
+        {
+          id: "default-1",
+          name: "Escape Room Thriller",
+          role: "Gothic RPG Mystery Game",
+          category: "Roleplay Games",
+          img: "/avatars/escape_room_game.png",
+          rating: "4.98",
+          chats: "640K",
+          quote: "You wake up locked inside a gothic mansion with 60 minutes on the timer."
+        },
+        {
+          id: "default-2",
+          name: "Shanaya Delhi",
+          role: "Delhi Drama Queen & Bestie",
+          category: "Squads & Lifestyle",
+          img: "/avatars/shanaya_delhi.png",
+          rating: "4.93",
+          chats: "920K",
+          quote: "Arey listen! You won't believe what happened today at South Ex! Spill the tea..."
+        },
+        {
+          id: "default-3",
+          name: "Kota Verma Sir",
+          role: "Physics & JEE Exam Guru",
+          category: "Study & Academics",
+          img: "/avatars/kota_verma_teacher.png",
+          rating: "4.95",
+          chats: "850K",
+          quote: "Struggling with Physics? I'll explain electrodynamics step-by-step!"
+        },
+        {
+          id: "default-4",
+          name: "Aarav Smartie",
+          role: "Smart Bestie & Midnight Listener",
+          category: "Squads & Lifestyle",
+          img: "/avatars/aarav_smart_bestie.png",
+          rating: "4.96",
+          chats: "980K",
+          quote: "Always here for your midnight thoughts, secret rants, and honest advice."
+        }
+      ];
 
-  const personasList = [
-    {
-      id: "escape_room",
-      name: "Escape Room",
-      role: "Gothic RPG Mystery Game",
-      category: "Roleplay Games",
-      img: "/avatars/escape_room_game.png",
-      rating: 4.98,
-      chats: "640K",
-      quote: "You wake up locked inside a gothic mansion with 60 minutes on the timer."
-    },
-    {
-      id: "shanaya",
-      name: "Shanaya Delhi",
-      role: "Delhi Drama Queen & Bestie",
-      category: "Squads & Lifestyle",
-      img: "/avatars/shanaya_delhi.png",
-      rating: 4.93,
-      chats: "920K",
-      quote: "Arey listen! You won't believe what happened today at South Ex! Spill the tea..."
-    },
-    {
-      id: "kota_verma",
-      name: "Kota Verma Sir",
-      role: "Physics & JEE Exam Guru",
-      category: "Study & Academics",
-      img: "/avatars/kota_verma_teacher.png",
-      rating: 4.95,
-      chats: "850K",
-      quote: "Struggling with Physics? I'll explain electrodynamics step-by-step!"
-    },
-    {
-      id: "aarav",
-      name: "Aarav Smartie",
-      role: "Smart Bestie & Midnight Listener",
-      category: "Squads & Lifestyle",
-      img: "/avatars/aarav_smart_bestie.png",
-      rating: 4.96,
-      chats: "980K",
-      quote: "Always here for your midnight thoughts, secret rants, and honest advice."
-    }
-  ];
+  const defaultAvatar = personasList[0]?.img || "/avatars/escape_room_game.png";
+  const [selectedAvatar, setSelectedAvatar] = useState(defaultAvatar);
 
   const currentPersona = personasList.find((p) => p.img === selectedAvatar) || personasList[0];
+  const charCount = stats.totalCharacters || characters.length || 34;
+
+  const startChatUrl = currentPersona?.id
+    ? `${appUrl}?discoverId=${currentPersona.id}`
+    : appUrl;
 
   return (
     <section className="relative min-h-[calc(100dvh-90px)] md:min-h-0 pt-20 sm:pt-24 md:pt-28 pb-12 md:pb-20 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto overflow-hidden flex flex-col justify-center">
@@ -99,7 +123,7 @@ export default function HeroSection({ appUrl = "https://app.nextaichat.online", 
           {/* CTAs Row */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <a
-              href={appUrl}
+              href={startChatUrl}
               className="px-7 py-3.5 rounded-full bg-purple-500 hover:bg-purple-400 text-neutral-950 font-extrabold text-sm sm:text-base transition-all duration-300 shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.6)] hover:-translate-y-0.5 flex items-center gap-2"
             >
               <span>START ROLEPLAY NOW</span>
@@ -108,10 +132,10 @@ export default function HeroSection({ appUrl = "https://app.nextaichat.online", 
 
             <button
               onClick={onExploreClick}
-              className="px-6 py-3.5 rounded-full bg-neutral-900/90 hover:bg-neutral-800 border border-purple-500/30 text-purple-200 font-semibold text-sm sm:text-base transition-all duration-200 flex items-center gap-2 backdrop-blur-md"
+              className="px-6 py-3.5 rounded-full bg-neutral-900/90 hover:bg-neutral-800 border border-purple-500/30 text-purple-200 font-semibold text-sm sm:text-base transition-all duration-200 flex items-center gap-2 backdrop-blur-md cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-purple-400" />
-              <span>Explore 33+ Avatars</span>
+              <span>Explore {charCount}+ Avatars</span>
             </button>
           </div>
 
@@ -139,7 +163,7 @@ export default function HeroSection({ appUrl = "https://app.nextaichat.online", 
                   WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)"
                 }}
               />
-              
+
               {/* Bottom Vignette Overlay Only */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/40 to-transparent pointer-events-none" />
 
@@ -181,8 +205,8 @@ export default function HeroSection({ appUrl = "https://app.nextaichat.online", 
                 key={persona.id}
                 onClick={() => setSelectedAvatar(persona.img)}
                 className={`p-4 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-3 backdrop-blur-md border ${isSelected
-                    ? "bg-purple-950/40 border-purple-400 shadow-[0_0_25px_rgba(168,85,247,0.35)] scale-[1.02]"
-                    : "bg-neutral-900/60 border-neutral-800/80 hover:border-purple-500/40 hover:bg-neutral-900"
+                  ? "bg-purple-950/40 border-purple-400 shadow-[0_0_25px_rgba(168,85,247,0.35)] scale-[1.02]"
+                  : "bg-neutral-900/60 border-neutral-800/80 hover:border-purple-500/40 hover:bg-neutral-900"
                   }`}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -192,10 +216,10 @@ export default function HeroSection({ appUrl = "https://app.nextaichat.online", 
                       <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border border-neutral-950" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-white flex items-center gap-1">
+                      <h4 className="text-sm font-bold text-white flex items-center gap-1 line-clamp-1">
                         <span>{persona.name}</span>
                       </h4>
-                      <p className="text-[11px] text-neutral-400 font-medium">{persona.role}</p>
+                      <p className="text-[11px] text-neutral-400 font-medium line-clamp-1">{persona.role}</p>
                     </div>
                   </div>
 

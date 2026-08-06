@@ -2,20 +2,25 @@
 
 import { ArrowUpRight, Sparkles, Cpu, Shield, Zap, Layers, RefreshCw, MessageSquare, Bot, Star } from "lucide-react";
 
-export default function ToolkitProcessCtaSection({ appUrl = "https://app.nextaichat.online" }) {
+export default function ToolkitProcessCtaSection({
+  appUrl = "https://app.nextaichat.online",
+  stats = { totalCharacters: 0 }
+}) {
+  const charCount = stats.totalCharacters || 34;
+
   const capabilities = [
     { name: "Gemini AI", icon: Cpu },
     { name: "Zero Latency", icon: Zap },
     { name: "Memory Recall", icon: RefreshCw },
     { name: "Private Chat", icon: Shield },
     { name: "Multi-Persona", icon: Layers },
-    { name: "33+ Avatars", icon: Bot },
+    { name: `${charCount}+ Avatars`, icon: Bot },
     { name: "Dynamic Turn", icon: MessageSquare },
     { name: "24/7 Queue", icon: Star }
   ];
 
   const steps = [
-    { num: "01", title: "DISCOVER", desc: "Pick from 33+ AI personas, study tutors, or story games." },
+    { num: "01", title: "DISCOVER", desc: `Pick from ${charCount}+ AI personas, study tutors, or story games.` },
     { num: "02", title: "CUSTOMIZE", desc: "Toggle memory recall, response style, and persona tone." },
     { num: "03", title: "CHAT LIVE", desc: "Sub-second responses with zero waiting queue." },
     { num: "04", title: "LEARN & ENJOY", desc: "Master exam concepts or immerse in creative stories." }
@@ -102,7 +107,7 @@ export default function ToolkitProcessCtaSection({ appUrl = "https://app.nextaic
             </h3>
 
             <p className="text-xs text-neutral-950/80 font-medium leading-relaxed">
-              Get instant access to 33+ AI personas, study simulators, college squads, and interactive story games.
+              Get instant access to {charCount}+ AI personas, study simulators, college squads, and interactive story games.
             </p>
           </div>
 
