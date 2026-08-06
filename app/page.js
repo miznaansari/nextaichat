@@ -2,7 +2,8 @@ import prisma from "@/lib/prisma";
 import JsonLd from "@/components/JsonLd";
 import HomeClient from "@/components/HomeClient";
 
-export const revalidate = 0;
+// 60-second Incremental Static Regeneration (ISR) for super-fast SSR load + top-tier SEO
+export const revalidate = 60;
 
 export const metadata = {
   title: "NextAiChat - AI Roleplay Platform for Study & Entertainment",
@@ -24,57 +25,88 @@ export default async function HomePage() {
   };
 
   try {
-    blogs = await prisma.blogPost.findMany({
-      where: { published: true },
-      take: 3,
-      orderBy: { createdAt: "desc" },
-    });
-  } catch (e) {
-    console.error("Home page blog fetch error:", e);
-  }
+    const [blogRes, charRes, sessionGroupRes, sessionCountRes, messageCountRes, userCountRes, charCountRes, charSumRes] =
+      await Promise.allSettled([
+        prisma.blogPost.findMany({
+          where: { published: true },
+          take: 3,
+          orderBy: { createdAt: "desc" },
+          select: {
+            id: true,
+            title: true,
+            slug: true,
+            excerpt: true,
+            category: true,
+            readTime: true,
+            createdAt: true,
+          },
+        }),
+        prisma.discoverCharacter.findMany({
+          where: { isPublic: true },
+          orderBy: { chatsCount: "desc" },
+          select: {
+            id: true,
+            name: true,
+            tagline: true,
+            category: true,
+            avatar: true,
+            chatsCount: true,
+            rating: true,
+            story: true,
+            badge: true,
+            filterGroup: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        }),
+        prisma.chatSession.groupBy({
+          by: ["discoverCharacterId"],
+          _count: { id: true },
+        }),
+        prisma.chatSession.count(),
+        prisma.chatMessage.count(),
+        prisma.user.count(),
+        prisma.discoverCharacter.count({ where: { isPublic: true } }),
+        prisma.discoverCharacter.aggregate({
+          _sum: { chatsCount: true },
+        }),
+      ]);
 
-  try {
-    const rawChars = await prisma.discoverCharacter.findMany({
-      where: { isPublic: true },
-      orderBy: { chatsCount: "desc" },
-    });
+    if (blogRes.status === "fulfilled" && blogRes.value) {
+      blogs = blogRes.value.map((post) => ({
+        ...post,
+        createdAt: post.createdAt ? post.createdAt.toISOString() : new Date().toISOString(),
+      }));
+    }
 
-    const charSessionCounts = await prisma.chatSession.groupBy({
-      by: ["discoverCharacterId"],
-      _count: { id: true },
-    });
+    if (charRes.status === "fulfilled" && charRes.value) {
+      const rawChars = charRes.value;
+      const sessionCountMap = {};
 
-    const sessionCountMap = {};
-    charSessionCounts.forEach((item) => {
-      if (item.discoverCharacterId) {
-        sessionCountMap[item.discoverCharacterId] = item._count.id;
+      if (sessionGroupRes.status === "fulfilled" && Array.isArray(sessionGroupRes.value)) {
+        sessionGroupRes.value.forEach((item) => {
+          if (item.discoverCharacterId) {
+            sessionCountMap[item.discoverCharacterId] = item._count.id;
+          }
+        });
       }
-    });
 
-    // Serialize Prisma objects safely for Client Component
-    characters = rawChars.map((c) => ({
-      ...c,
-      chatsCount: sessionCountMap[c.id] !== undefined ? sessionCountMap[c.id] : (c.chatsCount || 0),
-      createdAt: c.createdAt.toISOString(),
-      updatedAt: c.updatedAt.toISOString(),
-    }));
-  } catch (e) {
-    console.error("Home page character fetch error:", e);
-  }
+      characters = rawChars.map((c) => ({
+        ...c,
+        chatsCount: sessionCountMap[c.id] !== undefined ? sessionCountMap[c.id] : c.chatsCount || 0,
+        createdAt: c.createdAt ? c.createdAt.toISOString() : new Date().toISOString(),
+        updatedAt: c.updatedAt ? c.updatedAt.toISOString() : new Date().toISOString(),
+      }));
+    }
 
-  try {
-    const sessionCount = await prisma.chatSession.count();
-    const messageCount = await prisma.chatMessage.count();
-    const userCount = await prisma.user.count();
-    const charCount = await prisma.discoverCharacter.count({ where: { isPublic: true } });
-
-    const charChatsSum = await prisma.discoverCharacter.aggregate({
-      _sum: {
-        chatsCount: true,
-      },
-    });
-
-    const baseChatsSum = charChatsSum._sum.chatsCount || 0;
+    const sessionCount = sessionCountRes.status === "fulfilled" ? sessionCountRes.value : 0;
+    const messageCount = messageCountRes.status === "fulfilled" ? messageCountRes.value : 0;
+    const userCount = userCountRes.status === "fulfilled" ? userCountRes.value : 0;
+    const charCount = charCountRes.status === "fulfilled" ? charCountRes.value : characters.length;
+    const baseChatsSum =
+      charSumRes.status === "fulfilled" && charSumRes.value?._sum?.chatsCount
+        ? charSumRes.value._sum.chatsCount
+        : 0;
 
     pageStats = {
       totalChats: sessionCount > 0 ? sessionCount : baseChatsSum,
@@ -83,7 +115,7 @@ export default async function HomePage() {
       totalUsers: userCount,
     };
   } catch (e) {
-    console.error("Home page stats fetch error:", e);
+    console.error("Home page parallel fetch error:", e);
   }
 
   const faqSchema = {

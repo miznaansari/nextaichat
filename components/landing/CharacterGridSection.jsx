@@ -3,6 +3,7 @@
 import { useState, useRef, useMemo } from "react";
 import { Sparkles, MessageSquare, Star, ArrowUpRight, Flame, BookOpen, Users, Gamepad2, Dumbbell, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
+import OptimizedAvatar from "@/components/landing/OptimizedAvatar";
 
 export default function CharacterGridSection({
   id,
@@ -189,25 +190,25 @@ export default function CharacterGridSection({
               className="min-w-[280px] sm:min-w-[310px] max-w-[320px] shrink-0 snap-start group relative rounded-2xl bg-neutral-900/60 border border-purple-500/15 hover:border-purple-500/50 transition-all duration-300 overflow-hidden flex flex-col justify-between hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-1 backdrop-blur-md"
             >
               <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-neutral-950">
-                <img
+                <OptimizedAvatar
                   src={char.avatar}
                   alt={char.name}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent pointer-events-none" />
 
-                <div className="absolute top-3 left-3 flex items-center gap-2">
+                <div className="absolute top-3 left-3 flex items-center gap-2 z-10">
                   <span className="px-2.5 py-0.5 rounded-full bg-neutral-950/80 backdrop-blur-md border border-purple-500/30 text-purple-300 text-[11px] font-bold">
                     {char.badge}
                   </span>
                 </div>
 
-                <div className="absolute top-3 right-3 bg-neutral-950/80 backdrop-blur-md border border-neutral-800 px-2 py-0.5 rounded-full flex items-center gap-1 text-[11px] font-bold text-amber-400">
+                <div className="absolute top-3 right-3 bg-neutral-950/80 backdrop-blur-md border border-neutral-800 px-2 py-0.5 rounded-full flex items-center gap-1 text-[11px] font-bold text-amber-400 z-10">
                   <Star className="w-3 h-3 fill-current" />
                   <span>{char.rating}</span>
                 </div>
 
-                <div className="absolute bottom-3 right-3 flex items-center gap-1 text-[11px] font-semibold text-neutral-400 bg-neutral-950/80 px-2 py-0.5 rounded-md border border-neutral-800/80">
+                <div className="absolute bottom-3 right-3 flex items-center gap-1 text-[11px] font-semibold text-neutral-400 bg-neutral-950/80 px-2 py-0.5 rounded-md border border-neutral-800/80 z-10">
                   <MessageSquare className="w-3 h-3 text-purple-400" />
                   <span>{char.chats} chats</span>
                 </div>
@@ -221,7 +222,7 @@ export default function CharacterGridSection({
                   </h3>
                   <p className="text-xs text-neutral-400 font-medium mb-2 line-clamp-1">{char.role}</p>
 
-                  <p className="text-xs text-neutral-300 line-clamp-2 leading-relaxed italic bg-white/[0.03] p-2 rounded-xl border border-white/5">
+                  <p className="text-xs text-neutral-300 line-clamp-2 leading-relaxed italic bg-white/[0.03] p-2 rounded-xl border border-white/5 font-sans">
                     "{char.quote}"
                   </p>
                 </div>
@@ -237,6 +238,7 @@ export default function CharacterGridSection({
 
                   <a
                     href={chatUrl}
+                    aria-label={`Start chat with ${char.name}`}
                     className="px-3.5 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500 text-purple-300 hover:text-neutral-950 font-bold text-xs transition-all duration-200 border border-purple-500/30 shrink-0"
                   >
                     Start Chat

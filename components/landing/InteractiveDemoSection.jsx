@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { CheckCircle2, Sparkles, Send, Zap, Shield, Cpu, Layers } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import OptimizedAvatar from "@/components/landing/OptimizedAvatar";
 
 export default function InteractiveDemoSection({ id, appUrl = "https://app.nextaichat.online" }) {
   const { t } = useLanguage();
@@ -122,7 +123,7 @@ export default function InteractiveDemoSection({ id, appUrl = "https://app.nexta
                   }`}
                 >
                   {msg.sender !== "user" && (
-                    <img
+                    <OptimizedAvatar
                       src={msg.avatar}
                       alt={msg.name}
                       className="w-9 h-9 rounded-full object-cover border border-purple-500/40 shrink-0"
@@ -150,7 +151,7 @@ export default function InteractiveDemoSection({ id, appUrl = "https://app.nexta
                 <span>Ask physics problem, talk to Shanaya, or play Escape Room...</span>
                 <Sparkles className="w-4 h-4 text-purple-400" />
               </div>
-              <button className="w-10 h-10 rounded-xl bg-purple-500 text-neutral-950 flex items-center justify-center font-bold">
+              <button aria-label="Send interactive demo prompt" className="w-10 h-10 rounded-xl bg-purple-500 text-neutral-950 flex items-center justify-center font-bold cursor-pointer">
                 <Send className="w-4 h-4" />
               </button>
             </div>

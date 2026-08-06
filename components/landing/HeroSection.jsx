@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Sparkles, ArrowUpRight, Star, MessageSquare, Flame } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
+import OptimizedAvatar from "@/components/landing/OptimizedAvatar";
 
 export default function HeroSection({
   appUrl = "https://app.nextaichat.online",
@@ -82,10 +83,14 @@ export default function HeroSection({
     <section className="relative min-h-[calc(100dvh-90px)] md:min-h-screen md:h-screen pt-20 sm:pt-24 md:pt-24 pb-8 md:pb-12 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto overflow-hidden flex flex-col justify-center">
 
       {/* Mobile Fullscreen Background Hero Image */}
-      <div
-        className="md:hidden absolute inset-0 bg-cover bg-top opacity-30 blur-[2px] pointer-events-none transition-all duration-700 -z-10"
-        style={{ backgroundImage: `url(${selectedAvatar})` }}
-      />
+      <div className="md:hidden absolute inset-0 opacity-30 blur-[2px] pointer-events-none transition-all duration-700 -z-10 overflow-hidden">
+        <OptimizedAvatar
+          src={selectedAvatar}
+          alt={currentPersona.name}
+          priority={true}
+          className="w-full h-full object-cover object-top"
+        />
+      </div>
       <div className="md:hidden absolute inset-0 bg-gradient-to-b from-[#030712]/70 via-[#030712]/80 to-[#030712] pointer-events-none -z-10" />
 
       {/* Radial Purple Glow Background */}
@@ -147,7 +152,7 @@ export default function HeroSection({
         {/* Right Column: Zero Card Container - Persona Cutout Merging 100% into Background */}
         <div className="hidden md:flex lg:col-span-5 relative flex-col items-center justify-center pt-4 lg:pt-0">
 
-          {/* Image Container with 100% Background Merge (Zero Box Cards!) */}
+          {/* Image Container with 100% Background Merge */}
           <div className="relative group max-w-[380px] sm:max-w-[420px] w-full flex flex-col items-center">
 
             {/* Soft Ambient Background Purple Glow */}
@@ -156,10 +161,12 @@ export default function HeroSection({
             {/* Faded Merged Image Wrapper */}
             <div className="relative w-full h-[360px] md:h-[400px] lg:h-[440px] overflow-hidden flex items-center justify-center">
 
-              {/* Featured Avatar Image with Bottom-Only Vignette Fade */}
-              <img
+              {/* Featured Avatar Image with Progressive Sharp Load */}
+              <OptimizedAvatar
                 src={selectedAvatar}
                 alt={currentPersona.name}
+                priority={true}
+                fetchPriority="high"
                 className="w-full h-full object-cover object-top filter contrast-110 group-hover:scale-105 transition-all duration-700 select-none pointer-events-none"
                 style={{
                   maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
@@ -205,7 +212,16 @@ export default function HeroSection({
             return (
               <div
                 key={persona.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Select ${persona.name} persona`}
                 onClick={() => setSelectedAvatar(persona.img)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelectedAvatar(persona.img);
+                  }
+                }}
                 className={`p-4 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-3 backdrop-blur-xl border ${isSelected
                   ? "bg-purple-950/60 border-2 border-purple-400 shadow-[0_0_30px_rgba(168,85,247,0.4)] scale-[1.02]"
                   : "bg-neutral-900/80 border border-neutral-800 hover:border-purple-400/60 hover:bg-neutral-900/90 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]"
@@ -214,8 +230,8 @@ export default function HeroSection({
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border-2 border-purple-400/40 shadow-md">
-                      <img src={persona.img} alt={persona.name} className="w-full h-full object-cover object-top filter contrast-105" />
-                      <span className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-neutral-950 shadow-sm" />
+                      <OptimizedAvatar src={persona.img} alt={persona.name} priority={true} className="w-full h-full object-cover object-top filter contrast-105" />
+                      <span className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-neutral-950 shadow-sm z-10" />
                     </div>
                     <div>
                       <h4 className="text-sm sm:text-base font-black text-white tracking-tight line-clamp-1 font-sans">

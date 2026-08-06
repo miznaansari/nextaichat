@@ -3,6 +3,7 @@
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
+import OptimizedAvatar from "@/components/landing/OptimizedAvatar";
 
 export default function CalloutBannerSection({
   appUrl = "https://app.nextaichat.online",
@@ -31,7 +32,7 @@ export default function CalloutBannerSection({
             <div className="flex items-center justify-center lg:justify-start gap-3">
               <div className="flex -space-x-3 overflow-hidden">
                 {avatarStack.map((img, i) => (
-                  <img
+                  <OptimizedAvatar
                     key={i}
                     src={img}
                     alt="User avatar"

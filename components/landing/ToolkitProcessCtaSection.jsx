@@ -79,7 +79,7 @@ export default function ToolkitProcessCtaSection({
                     <h4 className="text-xs font-extrabold uppercase text-white tracking-wider">
                       {st.title}
                     </h4>
-                    <p className="text-xs text-neutral-400 mt-0.5 leading-relaxed">
+                    <p className="text-xs text-neutral-300 mt-0.5 leading-relaxed">
                       {st.desc}
                     </p>
                   </div>

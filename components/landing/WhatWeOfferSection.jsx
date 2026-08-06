@@ -3,6 +3,7 @@
 import { Sparkles, ArrowUpRight, Star, MessageSquare } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
+import OptimizedAvatar from "@/components/landing/OptimizedAvatar";
 
 export default function WhatWeOfferSection({ characters = [], stats = { totalCharacters: 0 }, appUrl = "https://app.nextaichat.online" }) {
   const { t } = useLanguage();
@@ -91,8 +92,6 @@ export default function WhatWeOfferSection({ characters = [], stats = { totalCha
     }
   ];
 
-  const charCount = stats.totalCharacters || characters.length || 34;
-
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto border-b border-purple-500/10 font-sans relative overflow-hidden">
       {/* Background Splatter Glow */}
@@ -119,12 +118,21 @@ export default function WhatWeOfferSection({ characters = [], stats = { totalCha
         </button>
       </div>
 
-      {/* 4 Rich Visual Avatar Feature Cards - 2 Cards Visible Side-by-Side on Mobile */}
+      {/* 4 Rich Visual Avatar Feature Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
         {modules.map((mod, idx) => (
           <div
             key={idx}
+            role="button"
+            tabIndex={0}
+            aria-label={`Explore ${mod.featuredName} section`}
             onClick={scrollToCharacters}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                scrollToCharacters();
+              }
+            }}
             className={`group relative rounded-2xl bg-neutral-950 border ${mod.border} transition-all duration-500 overflow-hidden flex flex-col justify-between hover:shadow-[0_0_40px_rgba(168,85,247,0.25)] hover:-translate-y-2 cursor-pointer backdrop-blur-xl`}
           >
             {/* Top Number & Category Header */}
@@ -139,14 +147,15 @@ export default function WhatWeOfferSection({ characters = [], stats = { totalCha
 
             {/* Avatar Visual Banner Container */}
             <div className="relative h-36 sm:h-56 lg:h-72 w-full overflow-hidden bg-neutral-950">
-              <img
+              <OptimizedAvatar
                 src={mod.avatar}
                 alt={mod.featuredName}
+                priority={idx < 2}
                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 select-none filter contrast-105"
               />
 
               {/* Bottom Vignette Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-t ${mod.accent} opacity-90 transition-opacity group-hover:opacity-95`} />
+              <div className={`absolute inset-0 bg-gradient-to-t ${mod.accent} opacity-90 transition-opacity group-hover:opacity-95 pointer-events-none`} />
 
               {/* Top Floating Badges */}
               <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex items-center gap-2 z-10">

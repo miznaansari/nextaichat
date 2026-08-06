@@ -30,17 +30,17 @@ export default function QuoteStatsSection({ stats = { totalChats: 0, totalCharac
           <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-neutral-800 pt-6 lg:pt-0 lg:pl-8 space-y-6">
             <div>
               <p className="text-3xl sm:text-4xl font-black text-white">{charCount}+</p>
-              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">{t("Unique AI Avatars & Games")}</p>
+              <p className="text-xs text-neutral-300 uppercase tracking-wider font-semibold mt-1">{t("Unique AI Avatars & Games")}</p>
             </div>
 
             <div>
               <p className="text-3xl sm:text-4xl font-black text-purple-400">{messageDisplay}+</p>
-              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">{t("Roleplay Messages Generated")}</p>
+              <p className="text-xs text-neutral-300 uppercase tracking-wider font-semibold mt-1">{t("Roleplay Messages Generated")}</p>
             </div>
 
             <div>
               <p className="text-3xl sm:text-4xl font-black text-indigo-400">{chatDisplay}+</p>
-              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">{t("Total Roleplays Started")}</p>
+              <p className="text-xs text-neutral-300 uppercase tracking-wider font-semibold mt-1">{t("Total Roleplays Started")}</p>
             </div>
           </div>
         </div>

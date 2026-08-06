@@ -72,18 +72,18 @@ export default function HomeClient({ blogs = [], characters = [], stats = { tota
                 className="group p-5 rounded-2xl bg-neutral-900/60 border border-purple-500/15 hover:border-purple-500/50 transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center gap-2 text-[11px] text-neutral-400 mb-2">
+                  <div className="flex items-center gap-2 text-[11px] text-neutral-300 mb-2">
                     <Tag className="w-3 h-3 text-purple-400" />
                     <span>{post.category || "AI Roleplay"}</span>
                   </div>
                   <h3 className="text-base font-bold text-white group-hover:text-purple-300 transition-colors line-clamp-2">
                     {post.title}
                   </h3>
-                  <p className="text-xs text-neutral-400 mt-2 line-clamp-3 leading-relaxed">
-                    {post.description || post.summary}
+                  <p className="text-xs text-neutral-300 mt-2 line-clamp-3 leading-relaxed">
+                    {post.description || post.summary || post.excerpt}
                   </p>
                 </div>
-                <div className="pt-4 border-t border-neutral-800 mt-4 flex items-center justify-between text-[11px] text-neutral-400">
+                <div className="pt-4 border-t border-neutral-800 mt-4 flex items-center justify-between text-[11px] text-neutral-300">
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3 text-neutral-400" />
                     {post.readTime || "4 min read"}
