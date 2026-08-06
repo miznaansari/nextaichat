@@ -2,8 +2,10 @@
 
 import { Quote, Sparkles } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function QuoteStatsSection({ stats = { totalChats: 0, totalCharacters: 0, totalMessages: 0 } }) {
+  const { t } = useLanguage();
   const charCount = stats.totalCharacters || 34;
   const messageDisplay = formatNumber(stats.totalMessages ?? 0);
   const chatDisplay = formatNumber(stats.totalChats ?? 0);
@@ -17,28 +19,28 @@ export default function QuoteStatsSection({ stats = { totalChats: 0, totalCharac
           <div className="lg:col-span-8 space-y-4">
             <Quote className="w-10 h-10 text-purple-400 opacity-60" />
             <blockquote className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight font-sans">
-              "Talk, learn, and play with AI companions that listen, remember your stories, and chat just like real friends."
+              "{t("Talk, learn, and play with AI companions that listen, remember your stories, and chat just like real friends.")}"
             </blockquote>
             <p className="text-xs sm:text-sm text-purple-300 font-bold uppercase tracking-widest flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>NEXTAICHAT ROLEPLAY PLATFORM</span>
+              <span>{t("NEXTAICHAT ROLEPLAY PLATFORM")}</span>
             </p>
           </div>
 
           <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-neutral-800 pt-6 lg:pt-0 lg:pl-8 space-y-6">
             <div>
               <p className="text-3xl sm:text-4xl font-black text-white">{charCount}+</p>
-              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">Unique AI Avatars & Games</p>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">{t("Unique AI Avatars & Games")}</p>
             </div>
 
             <div>
               <p className="text-3xl sm:text-4xl font-black text-purple-400">{messageDisplay}+</p>
-              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">Roleplay Messages Generated</p>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">{t("Roleplay Messages Generated")}</p>
             </div>
 
             <div>
               <p className="text-3xl sm:text-4xl font-black text-indigo-400">{chatDisplay}+</p>
-              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">Total Roleplays Started</p>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider font-semibold mt-1">{t("Total Roleplays Started")}</p>
             </div>
           </div>
         </div>

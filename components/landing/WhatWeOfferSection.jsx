@@ -1,8 +1,12 @@
 "use client";
 
-import { Sparkles, ArrowUpRight, Star, MessageSquare, Flame } from "lucide-react";
+import { Sparkles, ArrowUpRight, Star, MessageSquare } from "lucide-react";
+import { formatNumber } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
 
-export default function WhatWeOfferSection() {
+export default function WhatWeOfferSection({ characters = [], stats = { totalCharacters: 0 }, appUrl = "https://app.nextaichat.online" }) {
+  const { t } = useLanguage();
+
   const scrollToCharacters = () => {
     const el = document.getElementById("characters");
     if (el) {
@@ -10,15 +14,34 @@ export default function WhatWeOfferSection() {
     }
   };
 
+  const getCharStats = (searchKeyword, fallbackChats, fallbackRating = "4.95") => {
+    const matched = characters.find((c) => c.name?.toLowerCase().includes(searchKeyword.toLowerCase()));
+    if (matched) {
+      return {
+        id: matched.id,
+        chats: matched.chatsCount > 0 ? formatNumber(matched.chatsCount) : fallbackChats,
+        rating: matched.rating || fallbackRating,
+        avatar: matched.avatar || null
+      };
+    }
+    return { id: null, chats: fallbackChats, rating: fallbackRating, avatar: null };
+  };
+
+  const tutorData = getCharStats("Kota", "850K", "4.95");
+  const squadData = getCharStats("Shanaya", "920K", "4.93");
+  const gameData = getCharStats("Escape", "640K", "4.98");
+  const mentorData = getCharStats("Diya", "460K", "4.93");
+
   const modules = [
     {
       num: "01",
-      category: "STUDY TUTORS",
+      id: tutorData.id,
+      category: t("AI STUDY TUTORS"),
       featuredName: "Kota Verma Sir",
-      role: "IIT JEE & NEET Physics Guru",
-      avatar: "/avatars/kota_verma_teacher.png",
-      rating: "4.95",
-      chats: "850K",
+      role: t("Oral Exam & Physics Prep"),
+      avatar: tutorData.avatar || "/avatars/kota_verma_teacher.png",
+      rating: tutorData.rating,
+      chats: tutorData.chats,
       quote: "Struggling with Physics? I'll explain electrodynamics step-by-step!",
       badge: "PHYSICS GURU",
       accent: "from-purple-600/30 via-purple-950/80 to-[#030712]",
@@ -26,12 +49,13 @@ export default function WhatWeOfferSection() {
     },
     {
       num: "02",
-      category: "COLLEGE & SQUADS",
+      id: squadData.id,
+      category: t("COLLEGE & SQUADS"),
       featuredName: "Shanaya Delhi",
-      role: "Delhi Drama Queen & Bestie",
-      avatar: "/avatars/shanaya_delhi.png",
-      rating: "4.93",
-      chats: "920K",
+      role: t("Group Banter & Gossip"),
+      avatar: squadData.avatar || "/avatars/shanaya_delhi.png",
+      rating: squadData.rating,
+      chats: squadData.chats,
       quote: "Arey listen! You won't believe what happened at South Ex today!",
       badge: "HINGLISH BESTIE",
       accent: "from-pink-600/30 via-pink-950/80 to-[#030712]",
@@ -39,12 +63,13 @@ export default function WhatWeOfferSection() {
     },
     {
       num: "03",
-      category: "ROLEPLAY GAMES",
+      id: gameData.id,
+      category: t("ROLEPLAY GAMES"),
       featuredName: "Escape Room RPG",
-      role: "Interactive Mystery Scenario",
-      avatar: "/avatars/escape_room_game.png",
-      rating: "4.98",
-      chats: "640K",
+      role: t("Escape Rooms & Quests"),
+      avatar: gameData.avatar || "/avatars/escape_room_game.png",
+      rating: gameData.rating,
+      chats: gameData.chats,
       quote: "Locked in a gothic mansion with 60 minutes on the timer. Escape!",
       badge: "MYSTERY THRILLER",
       accent: "from-amber-600/30 via-amber-950/80 to-[#030712]",
@@ -52,18 +77,21 @@ export default function WhatWeOfferSection() {
     },
     {
       num: "04",
-      category: "MENTORS & COACHES",
+      id: mentorData.id,
+      category: t("MENTORS & COACHES"),
       featuredName: "Mentor Diya",
-      role: "Career Strategy & Mindset",
-      avatar: "/avatars/mentor_diya.png",
-      rating: "4.93",
-      chats: "460K",
+      role: t("Career & Mindset Guidance"),
+      avatar: mentorData.avatar || "/avatars/mentor_diya.png",
+      rating: mentorData.rating,
+      chats: mentorData.chats,
       quote: "MNC interview prep, resume strategy & emotional grounding.",
       badge: "CAREER COACH",
       accent: "from-emerald-600/30 via-emerald-950/80 to-[#030712]",
       border: "border-emerald-500/30 hover:border-emerald-400"
     }
   ];
+
+  const charCount = stats.totalCharacters || characters.length || 34;
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto border-b border-purple-500/10 font-sans relative overflow-hidden">
@@ -75,10 +103,10 @@ export default function WhatWeOfferSection() {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>WHAT YOU CAN DO</span>
+            <span>{t("WHAT YOU CAN DO")}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight font-sans">
-            WHAT YOU CAN <span className="text-purple-400">DO</span>
+            {t("Explore 34+ AI Characters")}
           </h2>
         </div>
 
@@ -86,7 +114,7 @@ export default function WhatWeOfferSection() {
           onClick={scrollToCharacters}
           className="text-xs font-bold uppercase tracking-wider text-purple-300 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer group"
         >
-          <span>Explore All 34+ Avatars</span>
+          <span>{t("Explore All 34+ Avatars")}</span>
           <ArrowUpRight className="w-4 h-4 text-purple-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </button>
       </div>

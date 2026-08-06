@@ -27,7 +27,7 @@ export default function HomeClient({ blogs = [], characters = [], stats = { tota
       <HeroSection onExploreClick={scrollToCharacters} appUrl={appUrl} characters={characters} stats={stats} />
 
       {/* 2. "WHAT WE DO" 4-Card Section (Replicating Image "WHAT I DO" 01, 02, 03, 04) */}
-      <WhatWeOfferSection />
+      <WhatWeOfferSection characters={characters} stats={stats} appUrl={appUrl} />
 
       {/* 3. "FEATURED CHARACTERS" 3-Card Grid (Commented out per request) */}
       {/* <FeaturedCharactersSection id="featured" appUrl={appUrl} onExploreClick={scrollToCharacters} characters={characters} stats={stats} /> */}

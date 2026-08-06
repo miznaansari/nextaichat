@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Sparkles, ArrowUpRight, Star, MessageSquare, Flame } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function HeroSection({
   appUrl = "https://app.nextaichat.online",
@@ -10,6 +11,8 @@ export default function HeroSection({
   characters = [],
   stats = { totalChats: 0, totalCharacters: 0 }
 }) {
+  const { t } = useLanguage();
+
   // Map real characters from DB into personas reel format
   const personasList = characters.length > 0
     ? characters.slice(0, 4).map((c) => ({
@@ -98,14 +101,14 @@ export default function HeroSection({
           {/* Main Giant Condensed Title */}
           <div className="space-y-1">
             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase text-white leading-[0.9] font-sans">
-              NEXTAICHAT
+              {t("NEXTAICHAT")}
             </h1>
             <div className="flex flex-wrap items-baseline gap-3">
               <span className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase bg-gradient-to-r from-purple-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent leading-[0.9]">
-                ROLEPLAY
+                {t("ROLEPLAY")}
               </span>
               <span className="font-serif italic text-3xl sm:text-5xl text-purple-300 font-normal">
-                Unlimited Personas
+                {t("Unlimited Personas")}
               </span>
             </div>
           </div>
@@ -113,10 +116,10 @@ export default function HeroSection({
           {/* Subtitle & Tagline */}
           <div className="max-w-xl space-y-2">
             <p className="text-neutral-300 text-sm sm:text-base leading-relaxed tracking-wide font-medium uppercase">
-              CHAT WITH AI BESTIES, STUDY TUTORS & PLAY FUN GAMES ANYTIME!
+              {t("CHAT WITH AI BESTIES, STUDY TUTORS & PLAY FUN GAMES ANYTIME!")}
             </p>
             <p className="text-xs text-purple-300 font-mono">
-              ✨ Simple • Fun • Private • Instant
+              {t("✨ Simple • Fun • Private • Instant")}
             </p>
           </div>
 
@@ -126,7 +129,7 @@ export default function HeroSection({
               href={startChatUrl}
               className="px-7 py-3.5 rounded-full bg-purple-500 hover:bg-purple-400 text-neutral-950 font-extrabold text-sm sm:text-base transition-all duration-300 shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.6)] hover:-translate-y-0.5 flex items-center gap-2"
             >
-              <span>START ROLEPLAY NOW</span>
+              <span>{t("START ROLEPLAY NOW")}</span>
               <ArrowUpRight className="w-5 h-5" />
             </a>
 
@@ -135,7 +138,7 @@ export default function HeroSection({
               className="px-6 py-3.5 rounded-full bg-neutral-900/90 hover:bg-neutral-800 border border-purple-500/30 text-purple-200 font-semibold text-sm sm:text-base transition-all duration-200 flex items-center gap-2 backdrop-blur-md cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-purple-400" />
-              <span>Explore {charCount}+ Avatars</span>
+              <span>{t("Explore 34+ Avatars")}</span>
             </button>
           </div>
 
@@ -182,17 +185,16 @@ export default function HeroSection({
 
       </div>
 
-      {/* FEATURED PERSONAS REEL - 4-Card Horizontal Gallery Strip */}
-      <div className="pt-8 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Flame className="w-4 h-4 text-purple-400" />
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-purple-300">
-              FEATURED PERSONAS REEL
-            </span>
+      {/* FEATURED PERSONAS REEL - Bold 4-Card Gallery Strip */}
+      <div className="pt-6 sm:pt-8 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-black uppercase tracking-wider shadow-[0_0_20px_rgba(168,85,247,0.25)] backdrop-blur-md">
+            <Flame className="w-4 h-4 text-purple-400 fill-purple-400/40 animate-pulse shrink-0" />
+            <span>Explore {charCount}+ AI Characters</span>
           </div>
-          <span className="text-xs text-neutral-400 font-mono hidden sm:inline">
-            Click card to switch hero spotlight
+
+          <span className="text-xs font-mono font-bold text-neutral-400 hidden sm:inline">
+            ✦ Click any persona card to launch spotlight
           </span>
         </div>
 
@@ -204,42 +206,42 @@ export default function HeroSection({
               <div
                 key={persona.id}
                 onClick={() => setSelectedAvatar(persona.img)}
-                className={`p-4 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-3 backdrop-blur-md border ${isSelected
-                  ? "bg-purple-950/40 border-purple-400 shadow-[0_0_25px_rgba(168,85,247,0.35)] scale-[1.02]"
-                  : "bg-neutral-900/60 border-neutral-800/80 hover:border-purple-500/40 hover:bg-neutral-900"
+                className={`p-4 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-3 backdrop-blur-xl border ${isSelected
+                  ? "bg-purple-950/60 border-2 border-purple-400 shadow-[0_0_30px_rgba(168,85,247,0.4)] scale-[1.02]"
+                  : "bg-neutral-900/80 border border-neutral-800 hover:border-purple-400/60 hover:bg-neutral-900/90 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]"
                   }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-purple-400/30">
-                      <img src={persona.img} alt={persona.name} className="w-full h-full object-cover object-top" />
-                      <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border border-neutral-950" />
+                    <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border-2 border-purple-400/40 shadow-md">
+                      <img src={persona.img} alt={persona.name} className="w-full h-full object-cover object-top filter contrast-105" />
+                      <span className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-neutral-950 shadow-sm" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-white flex items-center gap-1 line-clamp-1">
-                        <span>{persona.name}</span>
+                      <h4 className="text-sm sm:text-base font-black text-white tracking-tight line-clamp-1 font-sans">
+                        {persona.name}
                       </h4>
-                      <p className="text-[11px] text-neutral-400 font-medium line-clamp-1">{persona.role}</p>
+                      <p className="text-[11px] text-purple-300 font-bold line-clamp-1">{persona.role}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-neutral-950/80 px-2 py-0.5 rounded-md border border-neutral-800 shrink-0">
-                    <Star className="w-3 h-3 fill-current" />
+                  <div className="flex items-center gap-1 text-[11px] font-black text-amber-400 bg-neutral-950/90 px-2.5 py-1 rounded-lg border border-amber-500/30 shrink-0 shadow-sm">
+                    <Star className="w-3.5 h-3.5 fill-current" />
                     <span>{persona.rating}</span>
                   </div>
                 </div>
 
-                <p className="text-xs text-neutral-300 italic line-clamp-2 leading-relaxed bg-white/[0.03] p-2 rounded-xl border border-white/5">
+                <p className="text-xs font-semibold text-neutral-200 line-clamp-2 leading-relaxed bg-white/[0.04] p-2.5 rounded-xl border border-white/10 font-sans">
                   "{persona.quote}"
                 </p>
 
-                <div className="pt-2 border-t border-neutral-800/60 flex items-center justify-between text-[11px] text-neutral-400 font-mono">
-                  <span className="flex items-center gap-1">
-                    <MessageSquare className="w-3 h-3 text-purple-400" />
-                    {persona.chats}
+                <div className="pt-2.5 border-t border-neutral-800/80 flex items-center justify-between text-[11px] font-mono font-bold">
+                  <span className="flex items-center gap-1.5 text-neutral-300">
+                    <MessageSquare className="w-3.5 h-3.5 text-purple-400" />
+                    <span>{persona.chats}</span>
                   </span>
-                  <span className={`font-extrabold ${isSelected ? "text-purple-300" : "text-neutral-500"}`}>
-                    {isSelected ? "✦ ACTIVE" : "Select →"}
+                  <span className={`font-black uppercase tracking-wider ${isSelected ? "text-purple-300" : "text-neutral-500 group-hover:text-purple-400"}`}>
+                    {isSelected ? "✦ ACTIVE" : "Select &rarr;"}
                   </span>
                 </div>
               </div>

@@ -16,9 +16,11 @@ export const metadata = {
 export default async function HomePage() {
   let blogs = [];
   let characters = [];
-  let stats = {
+  let pageStats = {
     totalChats: 0,
     totalCharacters: 0,
+    totalMessages: 0,
+    totalUsers: 0,
   };
 
   try {
@@ -37,9 +39,22 @@ export default async function HomePage() {
       orderBy: { chatsCount: "desc" },
     });
 
+    const charSessionCounts = await prisma.chatSession.groupBy({
+      by: ["discoverCharacterId"],
+      _count: { id: true },
+    });
+
+    const sessionCountMap = {};
+    charSessionCounts.forEach((item) => {
+      if (item.discoverCharacterId) {
+        sessionCountMap[item.discoverCharacterId] = item._count.id;
+      }
+    });
+
     // Serialize Prisma objects safely for Client Component
     characters = rawChars.map((c) => ({
       ...c,
+      chatsCount: sessionCountMap[c.id] !== undefined ? sessionCountMap[c.id] : (c.chatsCount || 0),
       createdAt: c.createdAt.toISOString(),
       updatedAt: c.updatedAt.toISOString(),
     }));
@@ -61,7 +76,7 @@ export default async function HomePage() {
 
     const baseChatsSum = charChatsSum._sum.chatsCount || 0;
 
-    stats = {
+    pageStats = {
       totalChats: sessionCount > 0 ? sessionCount : baseChatsSum,
       totalCharacters: charCount,
       totalMessages: messageCount,
@@ -115,7 +130,7 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={faqSchema} />
-      <HomeClient blogs={blogs} characters={characters} stats={stats} appUrl={appUrl} />
+      <HomeClient blogs={blogs} characters={characters} stats={pageStats} appUrl={appUrl} />
     </>
   );
 }

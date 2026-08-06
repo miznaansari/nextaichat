@@ -2,12 +2,14 @@
 
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function CalloutBannerSection({
   appUrl = "https://app.nextaichat.online",
   stats = { totalChats: 0, totalCharacters: 0, totalUsers: 0 },
   characters = []
 }) {
+  const { t } = useLanguage();
   const avatarStack = characters.length >= 5
     ? characters.slice(0, 5).map((c) => c.avatar).filter(Boolean)
     : [
@@ -39,15 +41,15 @@ export default function CalloutBannerSection({
               </div>
               <span className="text-xs text-purple-300 font-bold tracking-wide flex items-center gap-1">
                 <ShieldCheck className="w-4 h-4 text-purple-400" />
-                Trusted by {userDisplay}+ Roleplayers
+                {t("Trusted by")} {userDisplay}+ {t("Roleplayers")}
               </span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight uppercase font-sans">
-              Together, let's explore unlimited AI personas & stories.
+              {t("Together, let's explore unlimited AI personas & stories.")}
             </h2>
             <p className="text-xs sm:text-sm text-neutral-300">
-              Join NextAiChat today and get instant access to {charCount}+ pre-configured AI tutors, besties, squads, and interactive games.
+              {t("Join NextAiChat today and get instant access to 34+ pre-configured AI tutors, besties, squads, and interactive games.")}
             </p>
           </div>
 
@@ -56,7 +58,7 @@ export default function CalloutBannerSection({
               href={appUrl}
               className="px-8 py-4 rounded-full bg-purple-500 hover:bg-purple-400 text-neutral-950 font-black text-sm sm:text-base transition-all duration-300 shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:scale-105 flex items-center gap-2 cursor-pointer"
             >
-              <span>Join AI Roleplay Today</span>
+              <span>{t("Join AI Roleplay Today")}</span>
               <ArrowRight className="w-5 h-5" />
             </a>
           </div>
