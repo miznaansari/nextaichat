@@ -22,43 +22,43 @@ export default function InteractiveDemoSection({ id, appUrl = "https://app.nexta
 
   const features = [
     {
-      title: "Real-Time Persona Adaptation",
-      description: "Characters remember your study goals, tone preferences, and past chat context continuously.",
+      title: "Remembers Your Stories & Mood",
+      description: "AI characters remember past chats and adapt to how you like to talk.",
       icon: Cpu
     },
     {
-      title: "Multi-Character Group Chats",
-      description: "Chat with entire squads (Campus Trio, Delhi College Squad, Study Buddies) with dynamic turn-taking.",
+      title: "Group Chats & Squad Banter",
+      description: "Chat with entire groups at once — campus friends, study squads, or party girls.",
       icon: Layers
     },
     {
-      title: "Sub-Second Latency Powered by Gemini AI",
-      description: "Lightning fast responses with zero waiting time. Built for fluid, natural dialogue flow.",
+      title: "Instant, Super-Fast Replies",
+      description: "No waiting in long queues. Get immediate responses anytime day or night.",
       icon: Zap
     },
     {
-      title: "100% Private & End-to-End Secure",
-      description: "Your roleplay conversations are encrypted and never used for public training without consent.",
+      title: "100% Private & Safe",
+      description: "Your chats are strictly private and stored securely.",
       icon: Shield
     }
   ];
 
   return (
-    <section id={id} className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto relative overflow-hidden">
+    <section id={id} className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto relative overflow-hidden font-sans">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-6 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>ADVANCED ENGINE</span>
+            <span>SMART & FRIENDLY AI</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight uppercase font-sans">
-            Data. AI. Speed. <br />
-            <span className="text-purple-400">Better Together.</span>
+            Smart AI That Learns & <br />
+            <span className="text-purple-400">Remembers Your Stories.</span>
           </h2>
 
           <p className="text-neutral-300 text-base leading-relaxed">
-            NextAiChat combines cutting-edge LLMs with dedicated memory layers and persona steering. Experience realistic conversations whether you're studying for exams or unwinding with AI besties.
+            NextAiChat gives you friendly AI companions that remember past chats, explain tough study topics step-by-step, and gossip like real best friends.
           </p>
 
           <div className="space-y-4 pt-2">
@@ -86,7 +86,7 @@ export default function InteractiveDemoSection({ id, appUrl = "https://app.nexta
               href={appUrl}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-500 hover:bg-purple-400 text-neutral-950 font-bold text-sm transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)]"
             >
-              <span>Test Live Chat Sandbox</span>
+              <span>Try Interactive Demo</span>
               <Zap className="w-4 h-4 fill-current" />
             </a>
           </div>

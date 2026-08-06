@@ -5,8 +5,8 @@ import { formatNumber } from "@/lib/utils";
 
 export default function QuoteStatsSection({ stats = { totalChats: 0, totalCharacters: 0, totalMessages: 0 } }) {
   const charCount = stats.totalCharacters || 34;
-  const messageDisplay = formatNumber(stats.totalMessages || 2500000);
-  const chatDisplay = formatNumber(stats.totalChats || 850000);
+  const messageDisplay = formatNumber(stats.totalMessages ?? 0);
+  const chatDisplay = formatNumber(stats.totalChats ?? 0);
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto relative overflow-hidden">
@@ -16,12 +16,12 @@ export default function QuoteStatsSection({ stats = { totalChats: 0, totalCharac
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8 space-y-4">
             <Quote className="w-10 h-10 text-purple-400 opacity-60" />
-            <blockquote className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight">
-              "Unleash your imagination with AI characters that remember your past, adapt to your personality, and converse like real human companions."
+            <blockquote className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight font-sans">
+              "Talk, learn, and play with AI companions that listen, remember your stories, and chat just like real friends."
             </blockquote>
             <p className="text-xs sm:text-sm text-purple-300 font-bold uppercase tracking-widest flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>NEXTAICAT ROLEPLAY ENGINE v4.1</span>
+              <span>NEXTAICHAT ROLEPLAY PLATFORM</span>
             </p>
           </div>
 

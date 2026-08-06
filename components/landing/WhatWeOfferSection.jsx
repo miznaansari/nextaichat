@@ -75,10 +75,10 @@ export default function WhatWeOfferSection() {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>EXPERT AI MODULES</span>
+            <span>WHAT YOU CAN DO</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight font-sans">
-            WHAT WE <span className="text-purple-400">ENGINEER</span>
+            WHAT YOU CAN <span className="text-purple-400">DO</span>
           </h2>
         </div>
 

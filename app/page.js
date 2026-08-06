@@ -36,7 +36,7 @@ export default async function HomePage() {
       where: { isPublic: true },
       orderBy: { chatsCount: "desc" },
     });
-    
+
     // Serialize Prisma objects safely for Client Component
     characters = rawChars.map((c) => ({
       ...c,
@@ -52,7 +52,7 @@ export default async function HomePage() {
     const messageCount = await prisma.chatMessage.count();
     const userCount = await prisma.user.count();
     const charCount = await prisma.discoverCharacter.count({ where: { isPublic: true } });
-    
+
     const charChatsSum = await prisma.discoverCharacter.aggregate({
       _sum: {
         chatsCount: true,
@@ -60,14 +60,11 @@ export default async function HomePage() {
     });
 
     const baseChatsSum = charChatsSum._sum.chatsCount || 0;
-    const calculatedTotalChats = baseChatsSum + sessionCount;
-    // Real messages count + proportional base messages estimate for public showcase characters
-    const calculatedTotalMessages = messageCount + (baseChatsSum * 15);
 
     stats = {
-      totalChats: calculatedTotalChats,
+      totalChats: sessionCount > 0 ? sessionCount : baseChatsSum,
       totalCharacters: charCount,
-      totalMessages: calculatedTotalMessages,
+      totalMessages: messageCount,
       totalUsers: userCount,
     };
   } catch (e) {

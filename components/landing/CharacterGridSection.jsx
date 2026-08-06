@@ -89,7 +89,7 @@ export default function CharacterGridSection({
   // Extract dynamic categories from real characters list
   const categoryTabs = useMemo(() => {
     const rawCategories = Array.from(new Set(formattedList.map((c) => c.category))).filter(Boolean);
-    
+
     const categoryIconMap = {
       "Exam & Tutors": BookOpen,
       "WhatsApp Group": MessageCircle,
@@ -165,8 +165,8 @@ export default function CharacterGridSection({
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
               className={`px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 whitespace-nowrap cursor-pointer ${isActive
-                  ? "bg-purple-500 text-neutral-950 shadow-[0_0_20px_rgba(168,85,247,0.4)] font-bold scale-105"
-                  : "bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 text-neutral-300 hover:text-white"
+                ? "bg-purple-500 text-neutral-950 shadow-[0_0_20px_rgba(168,85,247,0.4)] font-bold scale-105"
+                : "bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 text-neutral-300 hover:text-white"
                 }`}
             >
               <Icon className="w-4 h-4" />

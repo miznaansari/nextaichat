@@ -9,32 +9,32 @@ export default function ToolkitProcessCtaSection({
   const charCount = stats.totalCharacters || 34;
 
   const capabilities = [
-    { name: "Gemini AI", icon: Cpu },
-    { name: "Zero Latency", icon: Zap },
-    { name: "Memory Recall", icon: RefreshCw },
-    { name: "Private Chat", icon: Shield },
-    { name: "Multi-Persona", icon: Layers },
-    { name: `${charCount}+ Avatars`, icon: Bot },
-    { name: "Dynamic Turn", icon: MessageSquare },
-    { name: "24/7 Queue", icon: Star }
+    { name: "Smart AI", icon: Cpu },
+    { name: "Instant Chat", icon: Zap },
+    { name: "Remembers You", icon: RefreshCw },
+    { name: "100% Private", icon: Shield },
+    { name: "Group Chats", icon: Layers },
+    { name: `${charCount}+ Characters`, icon: Bot },
+    { name: "Natural Talking", icon: MessageSquare },
+    { name: "Always Online", icon: Star }
   ];
 
   const steps = [
-    { num: "01", title: "DISCOVER", desc: `Pick from ${charCount}+ AI personas, study tutors, or story games.` },
-    { num: "02", title: "CUSTOMIZE", desc: "Toggle memory recall, response style, and persona tone." },
-    { num: "03", title: "CHAT LIVE", desc: "Sub-second responses with zero waiting queue." },
-    { num: "04", title: "LEARN & ENJOY", desc: "Master exam concepts or immerse in creative stories." }
+    { num: "01", title: "PICK CHARACTER", desc: `Pick any character — study tutor, college bestie, or fun game.` },
+    { num: "02", title: "SET PREFERENCE", desc: "Choose your favorite chat style, language, or topic." },
+    { num: "03", title: "START CHATTING", desc: "Start talking instantly with zero waiting time." },
+    { num: "04", title: "LEARN & ENJOY", desc: "Solve physics problems, gossip, or play story games." }
   ];
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto border-b border-purple-500/10">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto border-b border-purple-500/10 font-sans">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        {/* Column 1: MY TOOLKIT / AI CAPABILITIES (Exact Layout from Image) */}
+        {/* Column 1: MY TOOLKIT / AI CAPABILITIES */}
         <div className="lg:col-span-4 p-6 rounded-2xl bg-neutral-900/60 border border-purple-500/15 backdrop-blur-md flex flex-col justify-between">
           <div>
             <h3 className="text-xl font-black uppercase tracking-tight text-white mb-6 font-sans">
-              AI ENGINE CAPABILITIES
+              WHY YOU'LL LOVE IT
             </h3>
 
             <div className="grid grid-cols-2 gap-3">
@@ -55,12 +55,12 @@ export default function ToolkitProcessCtaSection({
             </div>
           </div>
 
-          <div className="pt-6 mt-6 border-t border-neutral-800 text-[11px] font-mono text-neutral-500">
-            ENGINE STATUS: 100% OPERATIONAL
+          <div className="pt-6 mt-6 border-t border-neutral-800 text-[11px] font-mono text-neutral-400">
+            PLATFORM STATUS: ONLINE & READY 24/7
           </div>
         </div>
 
-        {/* Column 2: WORK PROCESS / HOW IT WORKS (Exact Layout 01, 02, 03, 04 from Image) */}
+        {/* Column 2: WORK PROCESS / HOW IT WORKS */}
         <div className="lg:col-span-4 p-6 rounded-2xl bg-neutral-900/60 border border-purple-500/15 backdrop-blur-md flex flex-col justify-between">
           <div>
             <h3 className="text-xl font-black uppercase tracking-tight text-white mb-6 font-sans">
@@ -86,8 +86,8 @@ export default function ToolkitProcessCtaSection({
             </div>
           </div>
 
-          <div className="pt-6 mt-6 border-t border-neutral-800 text-[11px] font-mono text-neutral-500">
-            SIMPLE • FAST • SECURE
+          <div className="pt-6 mt-6 border-t border-neutral-800 text-[11px] font-mono text-neutral-400">
+            SIMPLE • FAST • PRIVATE
           </div>
         </div>
 

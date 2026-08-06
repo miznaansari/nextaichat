@@ -13,57 +13,57 @@ export default function HeroSection({
   // Map real characters from DB into personas reel format
   const personasList = characters.length > 0
     ? characters.slice(0, 4).map((c) => ({
-        id: c.id,
-        name: c.name,
-        role: c.tagline || c.category || "AI Persona",
-        category: c.category || "Roleplay",
-        img: c.avatar || "/avatars/escape_room_game.png",
-        rating: c.rating || "5.0",
-        chats: formatNumber(c.chatsCount),
-        quote: c.story ? c.story.substring(0, 90) + "..." : c.tagline
-      }))
+      id: c.id,
+      name: c.name,
+      role: c.tagline || c.category || "AI Persona",
+      category: c.category || "Roleplay",
+      img: c.avatar || "/avatars/escape_room_game.png",
+      rating: c.rating || "5.0",
+      chats: formatNumber(c.chatsCount),
+      quote: c.story ? c.story.substring(0, 90) + "..." : c.tagline
+    }))
     : [
-        {
-          id: "default-1",
-          name: "Escape Room Thriller",
-          role: "Gothic RPG Mystery Game",
-          category: "Roleplay Games",
-          img: "/avatars/escape_room_game.png",
-          rating: "4.98",
-          chats: "640K",
-          quote: "You wake up locked inside a gothic mansion with 60 minutes on the timer."
-        },
-        {
-          id: "default-2",
-          name: "Shanaya Delhi",
-          role: "Delhi Drama Queen & Bestie",
-          category: "Squads & Lifestyle",
-          img: "/avatars/shanaya_delhi.png",
-          rating: "4.93",
-          chats: "920K",
-          quote: "Arey listen! You won't believe what happened today at South Ex! Spill the tea..."
-        },
-        {
-          id: "default-3",
-          name: "Kota Verma Sir",
-          role: "Physics & JEE Exam Guru",
-          category: "Study & Academics",
-          img: "/avatars/kota_verma_teacher.png",
-          rating: "4.95",
-          chats: "850K",
-          quote: "Struggling with Physics? I'll explain electrodynamics step-by-step!"
-        },
-        {
-          id: "default-4",
-          name: "Aarav Smartie",
-          role: "Smart Bestie & Midnight Listener",
-          category: "Squads & Lifestyle",
-          img: "/avatars/aarav_smart_bestie.png",
-          rating: "4.96",
-          chats: "980K",
-          quote: "Always here for your midnight thoughts, secret rants, and honest advice."
-        }
-      ];
+      {
+        id: "default-1",
+        name: "Escape Room Thriller",
+        role: "Gothic RPG Mystery Game",
+        category: "Roleplay Games",
+        img: "/avatars/escape_room_game.png",
+        rating: "4.98",
+        chats: "640K",
+        quote: "You wake up locked inside a gothic mansion with 60 minutes on the timer."
+      },
+      {
+        id: "default-2",
+        name: "Shanaya Delhi",
+        role: "Delhi Drama Queen & Bestie",
+        category: "Squads & Lifestyle",
+        img: "/avatars/shanaya_delhi.png",
+        rating: "4.93",
+        chats: "920K",
+        quote: "Arey listen! You won't believe what happened today at South Ex! Spill the tea..."
+      },
+      {
+        id: "default-3",
+        name: "Kota Verma Sir",
+        role: "Physics & JEE Exam Guru",
+        category: "Study & Academics",
+        img: "/avatars/kota_verma_teacher.png",
+        rating: "4.95",
+        chats: "850K",
+        quote: "Struggling with Physics? I'll explain electrodynamics step-by-step!"
+      },
+      {
+        id: "default-4",
+        name: "Aarav Smartie",
+        role: "Smart Bestie & Midnight Listener",
+        category: "Squads & Lifestyle",
+        img: "/avatars/aarav_smart_bestie.png",
+        rating: "4.96",
+        chats: "980K",
+        quote: "Always here for your midnight thoughts, secret rants, and honest advice."
+      }
+    ];
 
   const defaultAvatar = personasList[0]?.img || "/avatars/escape_room_game.png";
   const [selectedAvatar, setSelectedAvatar] = useState(defaultAvatar);
@@ -113,10 +113,10 @@ export default function HeroSection({
           {/* Subtitle & Tagline */}
           <div className="max-w-xl space-y-2">
             <p className="text-neutral-300 text-sm sm:text-base leading-relaxed tracking-wide font-medium uppercase">
-              WE ENGINEER HYPER-REALISTIC AI ROLEPLAY & STUDY SIMULATIONS THAT INSPIRE.
+              CHAT WITH AI BESTIES, STUDY TUTORS & PLAY FUN GAMES ANYTIME!
             </p>
-            <p className="text-xs text-neutral-400 font-mono">
-              &lt;/ PERSONAS . MEMORY . CHAT . SPEED /&gt;
+            <p className="text-xs text-purple-300 font-mono">
+              ✨ Simple • Fun • Private • Instant
             </p>
           </div>
 
