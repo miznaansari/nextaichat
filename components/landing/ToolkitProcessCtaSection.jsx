@@ -1,0 +1,124 @@
+"use client";
+
+import { ArrowUpRight, Sparkles, Cpu, Shield, Zap, Layers, RefreshCw, MessageSquare, Bot, Star } from "lucide-react";
+
+export default function ToolkitProcessCtaSection({ appUrl = "https://app.nextaichat.online" }) {
+  const capabilities = [
+    { name: "Gemini AI", icon: Cpu },
+    { name: "Zero Latency", icon: Zap },
+    { name: "Memory Recall", icon: RefreshCw },
+    { name: "Private Chat", icon: Shield },
+    { name: "Multi-Persona", icon: Layers },
+    { name: "33+ Avatars", icon: Bot },
+    { name: "Dynamic Turn", icon: MessageSquare },
+    { name: "24/7 Queue", icon: Star }
+  ];
+
+  const steps = [
+    { num: "01", title: "DISCOVER", desc: "Pick from 33+ AI personas, study tutors, or story games." },
+    { num: "02", title: "CUSTOMIZE", desc: "Toggle memory recall, response style, and persona tone." },
+    { num: "03", title: "CHAT LIVE", desc: "Sub-second responses with zero waiting queue." },
+    { num: "04", title: "LEARN & ENJOY", desc: "Master exam concepts or immerse in creative stories." }
+  ];
+
+  return (
+    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto border-b border-purple-500/10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        {/* Column 1: MY TOOLKIT / AI CAPABILITIES (Exact Layout from Image) */}
+        <div className="lg:col-span-4 p-6 rounded-2xl bg-neutral-900/60 border border-purple-500/15 backdrop-blur-md flex flex-col justify-between">
+          <div>
+            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-6 font-sans">
+              AI ENGINE CAPABILITIES
+            </h3>
+
+            <div className="grid grid-cols-2 gap-3">
+              {capabilities.map((cap, i) => {
+                const Icon = cap.icon;
+                return (
+                  <div
+                    key={i}
+                    className="p-3 rounded-xl bg-neutral-950/80 border border-neutral-800 flex items-center gap-2.5 hover:border-purple-500/40 transition-colors"
+                  >
+                    <div className="w-7 h-7 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+                      <Icon className="w-3.5 h-3.5" />
+                    </div>
+                    <span className="text-xs font-bold text-neutral-300">{cap.name}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="pt-6 mt-6 border-t border-neutral-800 text-[11px] font-mono text-neutral-500">
+            ENGINE STATUS: 100% OPERATIONAL
+          </div>
+        </div>
+
+        {/* Column 2: WORK PROCESS / HOW IT WORKS (Exact Layout 01, 02, 03, 04 from Image) */}
+        <div className="lg:col-span-4 p-6 rounded-2xl bg-neutral-900/60 border border-purple-500/15 backdrop-blur-md flex flex-col justify-between">
+          <div>
+            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-6 font-sans">
+              HOW IT WORKS
+            </h3>
+
+            <div className="space-y-4">
+              {steps.map((st, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    {st.num}
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-extrabold uppercase text-white tracking-wider">
+                      {st.title}
+                    </h4>
+                    <p className="text-xs text-neutral-400 mt-0.5 leading-relaxed">
+                      {st.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-6 mt-6 border-t border-neutral-800 text-[11px] font-mono text-neutral-500">
+            SIMPLE • FAST • SECURE
+          </div>
+        </div>
+
+        {/* Column 3: Vibrant Solid Purple CTA Block (Exact Layout "LET'S BUILD SOMETHING AMAZING TOGETHER ✦" from Image) */}
+        <div className="lg:col-span-4 p-8 rounded-2xl bg-purple-600 border border-purple-400 text-neutral-950 flex flex-col justify-between shadow-[0_0_40px_rgba(168,85,247,0.4)] relative overflow-hidden group">
+          
+          <div className="space-y-4 relative z-10">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-extrabold tracking-widest text-neutral-950/70 uppercase">
+                START ROLEPLAY
+              </span>
+              <Sparkles className="w-5 h-5 text-neutral-950" />
+            </div>
+
+            <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-neutral-950 leading-[0.95] font-sans">
+              LET'S CHAT <br /> WITH AI <br /> TOGETHER ✦
+            </h3>
+
+            <p className="text-xs text-neutral-950/80 font-medium leading-relaxed">
+              Get instant access to 33+ AI personas, study simulators, college squads, and interactive story games.
+            </p>
+          </div>
+
+          <div className="pt-6 relative z-10">
+            <a
+              href={appUrl}
+              className="w-full py-4 rounded-xl bg-neutral-950 hover:bg-neutral-900 text-white font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg group-hover:scale-[1.02]"
+            >
+              <span>GET STARTED FREE</span>
+              <ArrowUpRight className="w-4 h-4 text-purple-400" />
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
