@@ -112,6 +112,7 @@ export default function RootLayout({ children }) {
         <meta name="ai-content-declaration" content="authorized" />
         <meta name="chatgpt-plugin" content="enabled" />
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context Summary" />
+        <link rel="preload" href="/logo-landspace.png" as="image" type="image/png" />
       </head>
       <body className="min-h-full flex flex-col bg-[#030712] text-neutral-100 selection:bg-purple-500 selection:text-white relative overflow-x-clip w-full max-w-full font-sans">
         <LanguageProvider>
