@@ -76,7 +76,7 @@ export default function HeroSection({
     : appUrl;
 
   return (
-    <section className="relative min-h-[calc(100dvh-90px)] md:min-h-0 pt-20 sm:pt-24 md:pt-28 pb-12 md:pb-20 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto overflow-hidden flex flex-col justify-center">
+    <section className="relative min-h-[calc(100dvh-90px)] md:min-h-screen md:h-screen pt-20 sm:pt-24 md:pt-24 pb-8 md:pb-12 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto overflow-hidden flex flex-col justify-center">
 
       {/* Mobile Fullscreen Background Hero Image */}
       <div
@@ -90,10 +90,10 @@ export default function HeroSection({
       <div className="absolute top-1/4 left-10 w-[400px] h-[400px] bg-indigo-600/10 blur-[140px] rounded-full pointer-events-none -z-10" />
 
       {/* Main Hero Container */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-purple-500/10 pb-10 md:pb-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center border-b border-purple-500/10 pb-6 md:pb-8 my-auto">
 
         {/* Left Column: Huge Oversized Typography & Copy */}
-        <div className="lg:col-span-7 space-y-6 text-left relative z-10">
+        <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left relative z-10">
 
           {/* Main Giant Condensed Title */}
           <div className="space-y-1">
@@ -151,7 +151,7 @@ export default function HeroSection({
             <div className="absolute inset-0 bg-purple-600/35 blur-3xl rounded-full scale-110 pointer-events-none group-hover:scale-125 transition-transform duration-700" />
 
             {/* Faded Merged Image Wrapper */}
-            <div className="relative w-full h-[440px] sm:h-[480px] overflow-hidden flex items-center justify-center">
+            <div className="relative w-full h-[360px] md:h-[400px] lg:h-[440px] overflow-hidden flex items-center justify-center">
 
               {/* Featured Avatar Image with Bottom-Only Vignette Fade */}
               <img

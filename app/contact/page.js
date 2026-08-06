@@ -67,7 +67,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 relative z-10 flex flex-col justify-center">
+    <div className="flex-1 w-full max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 relative z-10 flex flex-col justify-center">
       {/* Dynamic Ambient Background Glow */}
       <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[140px] pointer-events-none" />
       <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[140px] pointer-events-none" />
