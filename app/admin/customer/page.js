@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   Users,
   Search,
@@ -204,13 +205,23 @@ export default function AdminCustomerPage() {
       </div>
 
       {/* Summary Chips */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
           <div>
             <span className="text-[10px] font-mono text-slate-400 uppercase block">Total Customers</span>
             <span className="text-2xl font-black text-white">{users.length}</span>
           </div>
           <Users className="w-6 h-6 text-cyan-400" />
+        </div>
+
+        <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+          <div>
+            <span className="text-[10px] font-mono text-slate-400 uppercase block">Total Chat Sessions</span>
+            <span className="text-2xl font-black text-purple-400">
+              {users.reduce((acc, u) => acc + (u.chatsCount || 0), 0)}
+            </span>
+          </div>
+          <MessageSquare className="w-6 h-6 text-purple-400" />
         </div>
 
         <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
@@ -255,6 +266,7 @@ export default function AdminCustomerPage() {
                   <th className="py-3.5 px-4">Customer Name & ID</th>
                   <th className="py-3.5 px-4">Email</th>
                   <th className="py-3.5 px-4">Auth Provider</th>
+                  <th className="py-3.5 px-4">Chat Sessions</th>
                   <th className="py-3.5 px-4">Daily Credit Usage</th>
                   <th className="py-3.5 px-4">All-Time Usage</th>
                   <th className="py-3.5 px-4">Joined Date & Time</th>
@@ -304,6 +316,13 @@ export default function AdminCustomerPage() {
                         </span>
                       </td>
 
+                      <td className="py-3.5 px-4 font-mono font-bold">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-950/60 border border-purple-500/30 text-purple-300 text-xs font-bold">
+                          <MessageSquare className="w-3.5 h-3.5 text-purple-400" />
+                          <span>{(u.chatsCount || 0).toLocaleString()} chats</span>
+                        </span>
+                      </td>
+
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-1.5">
                           <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -328,6 +347,14 @@ export default function AdminCustomerPage() {
 
                       <td className="py-3.5 px-4 text-right">
                         <div className="flex items-center justify-end gap-2">
+                          <Link
+                            href={`/admin/customer/${u.id}`}
+                            className="px-3 py-1.5 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 text-cyan-200 text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                            title="Inspect Realtime Chat Sessions & Live Monitor"
+                          >
+                            <MessageSquare className="w-3.5 h-3.5 text-cyan-400" />
+                            <span>View Chats</span>
+                          </Link>
                           <button
                             onClick={() => handleOpenEditUserModal(u)}
                             className="px-3 py-1.5 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 text-purple-200 text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer"

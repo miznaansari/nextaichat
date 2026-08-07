@@ -14,7 +14,6 @@ export async function GET(req) {
 
     const todayDateStr = new Date().toISOString().split("T")[0];
 
-    // Find users matching search criteria if provided
     const whereCondition = searchQuery.trim()
       ? {
           OR: [
@@ -39,6 +38,11 @@ export async function GET(req) {
             count: true,
           },
         },
+        _count: {
+          select: {
+            chats: true,
+          },
+        },
       },
       orderBy: { createdAt: "desc" },
     });
@@ -48,6 +52,7 @@ export async function GET(req) {
       const todayCount = todayUsage ? todayUsage.count : 0;
       const totalCount = u.aiUsages ? u.aiUsages.reduce((acc, r) => acc + r.count, 0) : 0;
       const limit = u.dailyLimit && u.dailyLimit > 0 ? u.dailyLimit : 100;
+      const chatsCount = u._count ? u._count.chats : 0;
 
       return {
         id: u.id,
@@ -58,6 +63,7 @@ export async function GET(req) {
         todayCount,
         remainingCredits: Math.max(0, limit - todayCount),
         totalCount,
+        chatsCount,
         createdAt: u.createdAt,
       };
     });

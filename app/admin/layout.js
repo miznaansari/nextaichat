@@ -110,9 +110,9 @@ export default function AdminLayoutShell({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 flex flex-col md:flex-row select-none">
-      {/* Mobile Header Bar */}
-      <header className="md:hidden h-16 bg-slate-950/90 border-b border-slate-800 px-4 flex items-center justify-between sticky top-0 z-40 backdrop-blur-md">
+    <div className="min-h-screen bg-[#030712] text-slate-100 flex flex-col md:flex-row select-none relative">
+      {/* Mobile Header Bar - Sticky Top */}
+      <header className="md:hidden h-16 bg-slate-950/95 border-b border-slate-800/80 px-4 flex items-center justify-between sticky top-0 left-0 right-0 w-full z-50 backdrop-blur-xl shadow-lg">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-6 h-6 text-cyan-400" />
           <span className="font-bold text-base tracking-tight text-white font-mono">
@@ -121,13 +121,21 @@ export default function AdminLayoutShell({ children }) {
         </div>
         <button
           onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-          className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-900 border border-slate-800"
+          className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-900 border border-slate-800 cursor-pointer"
         >
           {isMobileNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </header>
 
-      {/* Admin Sidebar Navigation (Fixed Viewport Anchor for Sticky Sidebar) */}
+      {/* Mobile Overlay Backdrop */}
+      {isMobileNavOpen && (
+        <div
+          onClick={() => setIsMobileNavOpen(false)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+        />
+      )}
+
+      {/* Admin Sidebar Navigation */}
       <aside
         className={`fixed top-0 left-0 h-screen w-64 shrink-0 bg-slate-950 border-r border-slate-800/80 flex flex-col z-50 transition-transform duration-200 ease-out ${
           isMobileNavOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"

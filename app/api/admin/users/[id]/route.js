@@ -2,6 +2,68 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import RequireAdmin from "@/lib/RequireAdmin";
 
+// GET user detail with all associated chat sessions
+export async function GET(req, { params }) {
+  try {
+    const admin = await RequireAdmin(req);
+    if (!admin) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json({ error: "User ID is required" }, { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        authProvider: true,
+        dailyLimit: true,
+        createdAt: true,
+        chats: {
+          orderBy: { updatedAt: "desc" },
+          select: {
+            id: true,
+            title: true,
+            selectedModel: true,
+            createdAt: true,
+            updatedAt: true,
+            story: true,
+            discoverCharacter: {
+              select: {
+                id: true,
+                name: true,
+                avatar: true,
+                tagline: true,
+                category: true,
+              },
+            },
+            _count: {
+              select: { messages: true },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ user });
+  } catch (error) {
+    console.error("Admin Fetch User Detail Error:", error);
+    return NextResponse.json(
+      { error: error.message || "Failed to fetch user details" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function PATCH(req, { params }) {
   try {
     const admin = await RequireAdmin(req);
@@ -25,7 +87,6 @@ export async function PATCH(req, { params }) {
       );
     }
 
-    // Verify user exists
     const userExists = await prisma.user.findUnique({
       where: { id },
     });
@@ -34,7 +95,6 @@ export async function PATCH(req, { params }) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Update user daily limit
     const updatedUser = await prisma.user.update({
       where: { id },
       data: { dailyLimit: newLimit },
@@ -59,7 +119,6 @@ export async function PATCH(req, { params }) {
   }
 }
 
-// DELETE customer user, along with cascading deletion of all chat sessions, messages, personas & usage
 export async function DELETE(req, { params }) {
   try {
     const admin = await RequireAdmin(req);
@@ -72,7 +131,6 @@ export async function DELETE(req, { params }) {
       return NextResponse.json({ error: "User ID is required" }, { status: 400 });
     }
 
-    // Verify user exists
     const targetUser = await prisma.user.findUnique({
       where: { id },
       select: { id: true, name: true, email: true },
@@ -82,7 +140,6 @@ export async function DELETE(req, { params }) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Delete User - Cascades down to UserSession, ChatCharacter, ChatSession -> ChatMessage & SessionCharacter, ReusablePhrase, AiUsage, UserPersona
     await prisma.user.delete({
       where: { id },
     });
