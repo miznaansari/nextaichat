@@ -80,7 +80,7 @@ export default function HeroSection({
     : appUrl;
 
   return (
-    <section className="relative min-h-[calc(100dvh-90px)] md:min-h-screen md:h-screen pt-20 sm:pt-24 md:pt-24 pb-8 md:pb-12 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto overflow-hidden flex flex-col justify-center">
+    <section className="relative min-h-screen pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-14 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto overflow-hidden flex flex-col justify-start">
 
       {/* Mobile Fullscreen Background Hero Image */}
       <div className="md:hidden absolute inset-0 opacity-30 blur-[2px] pointer-events-none transition-all duration-700 -z-10 overflow-hidden">
@@ -98,7 +98,7 @@ export default function HeroSection({
       <div className="absolute top-1/4 left-10 w-[400px] h-[400px] bg-indigo-600/10 blur-[140px] rounded-full pointer-events-none -z-10" />
 
       {/* Main Hero Container */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center border-b border-purple-500/10 pb-6 md:pb-8 my-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center border-b border-purple-500/10 pb-6 md:pb-8 mb-6 sm:mb-8">
 
         {/* Left Column: Huge Oversized Typography & Copy */}
         <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left relative z-10">
