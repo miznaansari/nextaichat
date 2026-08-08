@@ -181,6 +181,76 @@
     "blur": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAABwAQCdASoQABAABUB8JZgCdADqAAD4oc93xP8w9L2umaQv1StJhLStmBVgAA==",
     "original": "/avatars/shanaya_delhi.png"
   },
+  "slider_aunty_alone": {
+    "webp": "/avatars/compressed/slider_aunty_alone.webp",
+    "sm": "/avatars/compressed/slider_aunty_alone-sm.webp",
+    "low": "/avatars/compressed/slider_aunty_alone-low.webp",
+    "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQABAABUB8JZgCdADZuk/AAADNFdPF6tsZ22e9F8ew1DH3sxAujOWl4AA=",
+    "original": "/avatars/slider_aunty_alone.png"
+  },
+  "slider_balcony_diya": {
+    "webp": "/avatars/compressed/slider_balcony_diya.webp",
+    "sm": "/avatars/compressed/slider_balcony_diya-sm.webp",
+    "low": "/avatars/compressed/slider_balcony_diya-low.webp",
+    "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQABAABUB8JbACdADdC2GAAADL8Zj1h7a27DOlxCk6UXdbzgizqK8AAAA=",
+    "original": "/avatars/slider_balcony_diya.png"
+  },
+  "slider_college_girl": {
+    "webp": "/avatars/compressed/slider_college_girl.webp",
+    "sm": "/avatars/compressed/slider_college_girl-sm.webp",
+    "low": "/avatars/compressed/slider_college_girl-low.webp",
+    "blur": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACwAQCdASoQABAABUB8JQBOgB6NieKAAP7lk39HB1+AzMoVSRFvPMAA",
+    "original": "/avatars/slider_college_girl.png"
+  },
+  "slider_gf_self_study": {
+    "webp": "/avatars/compressed/slider_gf_self_study.webp",
+    "sm": "/avatars/compressed/slider_gf_self_study-sm.webp",
+    "low": "/avatars/compressed/slider_gf_self_study-low.webp",
+    "blur": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACQAQCdASoQAAkABUB8JQBOgBA0/AAA/uXqeEYc/ZgXpLkPLsW3WjpunbRJAAAA",
+    "original": "/avatars/slider_gf_self_study.png"
+  },
+  "slider_gym_zoya": {
+    "webp": "/avatars/compressed/slider_gym_zoya.webp",
+    "sm": "/avatars/compressed/slider_gym_zoya-sm.webp",
+    "low": "/avatars/compressed/slider_gym_zoya-low.webp",
+    "blur": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAADQAQCdASoQABAABUB8JYwC7ADzd3MGAADdl8juwNl58Q0mueKa4GtmAAA=",
+    "original": "/avatars/slider_gym_zoya.png"
+  },
+  "slider_lucknow_shahana": {
+    "webp": "/avatars/compressed/slider_lucknow_shahana.webp",
+    "sm": "/avatars/compressed/slider_lucknow_shahana-sm.webp",
+    "low": "/avatars/compressed/slider_lucknow_shahana-low.webp",
+    "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQABAABUB8JZACdADVzAYAAP426Pf9dtQVXYJir8jXFeF2ClqCFFDSAAA=",
+    "original": "/avatars/slider_lucknow_shahana.png"
+  },
+  "slider_night_out": {
+    "webp": "/avatars/compressed/slider_night_out.webp",
+    "sm": "/avatars/compressed/slider_night_out-sm.webp",
+    "low": "/avatars/compressed/slider_night_out-low.webp",
+    "blur": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAADwAQCdASoQABAABUB8JQBWACHw+Js9qQAA/ttB9E9gi+PNTiVYO/GlkUAAAA==",
+    "original": "/avatars/slider_night_out.png"
+  },
+  "slider_office_kavya": {
+    "webp": "/avatars/compressed/slider_office_kavya.webp",
+    "sm": "/avatars/compressed/slider_office_kavya-sm.webp",
+    "low": "/avatars/compressed/slider_office_kavya-low.webp",
+    "blur": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAAAQAgCdASoQABAABUB8JZQCdADdqLXW6RAAAP7p1M1+o6bm8UEonLcHgpAAAA==",
+    "original": "/avatars/slider_office_kavya.png"
+  },
+  "slider_rainy_balcony": {
+    "webp": "/avatars/compressed/slider_rainy_balcony.webp",
+    "sm": "/avatars/compressed/slider_rainy_balcony-sm.webp",
+    "low": "/avatars/compressed/slider_rainy_balcony-low.webp",
+    "blur": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACwAQCdASoQABAABUB8JYgCdAChZHAAAP1GHtbM6dG3ep1GdSL/lTy7oBTC8AAA",
+    "original": "/avatars/slider_rainy_balcony.png"
+  },
+  "slider_traveling": {
+    "webp": "/avatars/compressed/slider_traveling.webp",
+    "sm": "/avatars/compressed/slider_traveling-sm.webp",
+    "low": "/avatars/compressed/slider_traveling-low.webp",
+    "blur": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAQCdASoQABAABUB8JYwCdAEQDhVYgQAA/pFDP/WzATv8326bhvA+UkvtwggA",
+    "original": "/avatars/slider_traveling.png"
+  },
   "story_chain_game": {
     "webp": "/avatars/compressed/story_chain_game.webp",
     "sm": "/avatars/compressed/story_chain_game-sm.webp",
